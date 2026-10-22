@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "name": "Beach Dawgs Express",
+      "price": "Starting at $200"
+    },
+    {
+      "name": "Boardwalk Full Detail",
+      "price": "Starting at $325"
+    },
+    {
+      "name": "The Tsunami Treatment",
+      "price": "Starting at $550"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+media:
+  input: assets/gallery
+  output: /assets/gallery
+content:
+  - name: gallery
+    label: Gallery photos (new photos appear at the top)
+    type: file
+    path: data/gallery.json
+    fields:
+      - name: items
+        label: Photos
+        type: object
+        list: true
+        fields:
+          - name: image
+            label: Photo
+            type: image
+          - name: caption
+            label: Description (e.g. "2024 Porsche 911, ceramic coating")
+            type: string
+  - name: site
+    label: Business info and promo banner
+    type: file
+    path: data/site.json
+    fields:
+      - {name: phone_display, label: "Phone (as shown, e.g. (252) 933-7311)", type: string}
+      - {name: phone_digits, label: "Phone digits only, starting with 1 (e.g. 12529337311)", type: string}
+      - {name: email, label: Email, type: string}
+      - {name: address_line1, label: Street address, type: string}
+      - {name: address_line2, label: City, state, ZIP, type: string}
+      - {name: hours, label: Hours, type: string}
+      - {name: promo_enabled, label: Show promo banner at top of every page, type: boolean}
+      - {name: promo_text, label: Promo banner text, type: string}
+      - {name: promo_link, label: Promo banner link (optional), type: string}
+  - name: packages
+    label: Package starting prices
+    type: file
+    path: data/packages.json
+    fields:
+      - name: items
+        label: Packages (name must match the page exactly)
+        type: object
+        list: true
+        fields:
+          - {name: name, label: Package name, type: string}
+          - {name: price, label: 'Price text (e.g. Starting at $200)', type: string}
+  - name: faq
+    label: FAQs
+    type: file
+    path: data/faq.json
+    fields:
+      - name: items
+        label: Questions
+        type: object
+        list: true
+        fields:
+          - {name: question, label: Question, type: string}
+          - {name: answer, label: Answer, type: text}

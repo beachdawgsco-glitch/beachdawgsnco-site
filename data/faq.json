@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "question": "How do I book, and how do deposits work?",
+      "answer": "Book online through our booking page or call/text 252-933-7311. Appointments are first come, first served, and your date is held once your deposit is received. The deposit is 35% of your service and goes toward your total."
+    },
+    {
+      "question": "What is your cancellation policy?",
+      "answer": "Deposits are fully refundable when you cancel at least 24 hours before your appointment. Cancellations with less than 24 hours notice are nonrefundable. [Read the full policy](policies.html)"
+    },
+    {
+      "question": "What does mobile detailing involve?",
+      "answer": "Our detailing experts bring a fully equipped mobile unit to your location, whether it’s a house, apartment, condo, or even the barracks. We provide top-notch detailing services right at your doorstep."
+    },
+    {
+      "question": "Is there an extra charge for excessive dirt or pet hair?",
+      "answer": "Additional charges may apply for excessive dirt or pet hair removal due to the extra time and effort required. If any fees apply, we’ll inform you before we begin."
+    },
+    {
+      "question": "How long does a mobile detailing take?",
+      "answer": "Our services typically range from 1 to 6 hours, depending on the level of detail included in your package and any add-on services that you choose."
+    },
+    {
+      "question": "Do you detail more than just cars?",
+      "answer": "Yes! In addition to cars, trucks, and SUVs we detail motorcycles, RVs, boats, ATVs, and golf carts."
+    },
+    {
+      "question": "What areas do you service?",
+      "answer": "Jacksonville, Sneads Ferry, Wilmington, Carolina Beach, Hampstead, Swansboro, and all surrounding areas in Eastern NC."
+    },
+    {
+      "question": "Why should I consider ceramic coating?",
+      "answer": "Ceramic coating forms a durable, hydrophobic layer that repels water, dirt, and grime, making your vehicle easier to clean. It offers UV protection, enhances gloss, and helps prevent oxidation and minor scratches."
+    },
+    {
+      "question": "How long does a ceramic coating last?",
+      "answer": "Our ceramic coatings last between 3 years and a lifetime, depending on the package and maintenance. The 10-year (lifetime) Borophene coating requires an annual inspection to maintain its warranty."
+    },
+    {
+      "question": "How do I maintain a ceramic-coated vehicle?",
+      "answer": "Use regular hand washing with pH-neutral soap. We offer a free exterior hand wash 30 days after the ceramic coating. Avoid automatic car washes to preserve the coating’s effectiveness and longevity."
+    }
+  ]
+}
