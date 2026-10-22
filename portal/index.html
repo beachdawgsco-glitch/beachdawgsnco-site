@@ -27,7 +27,7 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
 
 <section id="app" class="hide">
  <h1>Your account</h1>
- <div class="tabs" id="apptabs"><button data-p="p-profile" class="on">Profile</button><button data-p="p-veh">Vehicles</button><button data-p="p-priv">Privacy</button><button data-p="p-sec">Security</button><button data-p="p-edit" id="tab-edit" class="hide">Edit site</button><button data-p="p-staff" id="tab-staff" class="hide">Owner tools</button></div>
+ <div class="tabs" id="apptabs"><button data-p="p-profile" class="on">Profile</button><button data-p="p-veh">Vehicles</button><button data-p="p-priv">Privacy</button><button data-p="p-sec">Security</button><button data-p="p-lib" id="tab-lib" class="hide">Media library</button><button data-p="p-edit" id="tab-edit" class="hide">Edit site</button><button data-p="p-staff" id="tab-staff" class="hide">Owner tools</button></div>
 
  <div id="p-profile" class="card pane"><h2>Profile</h2><form id="profform">
   <label for="fn">Full name</label><input id="fn" maxlength="160" autocomplete="name">
@@ -50,6 +50,18 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
   <hr style="border-color:#2a2a2a;margin:22px 0"><h2>Password</h2><form id="pwform"><label for="np">New password (at least 10 characters)</label><input id="np" type="password" minlength="10" autocomplete="new-password" required><button type="submit" class="alt">Change password</button></form></div>
 
 
+
+ <div id="p-lib" class="card pane hide"><h2>Media library</h2>
+  <p class="small">Your cloud storage for site photos. Upload once, then use a photo anywhere on the site. Folders keep things organized, for example Ceramic Coatings or Mobile Detailing. Anyone with staff access can add photos. Only the owner and managers can delete.</p>
+  <div id="lib-stats" class="small"></div>
+  <label for="lib-folder-up">Upload into folder (optional)</label><input id="lib-folder-up" list="lib-folders" maxlength="60" placeholder="For example Ceramic Coatings"><datalist id="lib-folders"></datalist>
+  <label for="lib-files">Choose photos (JPEG, PNG or WebP)</label><input id="lib-files" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+  <button id="lib-go" type="button">Upload photos</button><button id="lib-drive" type="button" class="alt">Import from Google Drive</button>
+  <hr style="border-color:#2a2a2a;margin:18px 0">
+  <div class="tabs" id="lib-tabs"></div>
+  <label for="lib-search">Search by name</label><input id="lib-search" maxlength="60">
+  <div id="lib-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:12px"></div>
+ </div>
  <div id="p-edit" class="card pane hide"><h2>Edit site</h2>
   <p class="small">Changes go live on the public site right away. Staff can manage gallery photos. Managers and the owner can edit everything.</p>
   <h3>Photos by page</h3>
@@ -143,7 +155,7 @@ async function loadRequests(){const{data}=await sb.from('beach_privacy_requests'
 async function rq(kind){if(kind==='deletion'&&!confirm('Request deletion of your account and saved information?'))return;
  const{error}=await sb.from('beach_privacy_requests').insert({user_id:user.id,kind});say(error?E(error):'Request received. We will reply by email.',error?'err':'ok');loadRequests();}
 $('rq-export').onclick=()=>rq('export');$('rq-del').onclick=()=>rq('deletion');
-async function loadAccess(){const{data}=await sb.rpc('beach_my_access');role=data&&data.role||null;$('tab-staff').classList.toggle('hide',role!=='owner');$('tab-edit').classList.toggle('hide',!role);if(role)loadEdit();
+async function loadAccess(){const{data}=await sb.rpc('beach_my_access');role=data&&data.role||null;$('tab-staff').classList.toggle('hide',role!=='owner');$('tab-edit').classList.toggle('hide',!role);$('tab-lib').classList.toggle('hide',!role);if(role)loadEdit();
  if(role&&role!=='owner'){say('Signed in with '+role+' access.','info');}if(role==='owner')loadStaff();}
 async function loadStaff(){const{data,error}=await sb.rpc('beach_staff_directory');const l=$('stafflist');l.innerHTML='';if(error){l.textContent=E(error);return;}
  (data||[]).forEach(m=>{const r=document.createElement('div');r.className='row';const s=document.createElement('span');s.textContent=m.email+' ('+m.role+(m.active?'':', deactivated')+')';r.appendChild(s);
@@ -191,13 +203,16 @@ async function loadContent(){
 }
 async function saveContent(k,d,okmsg){const{error}=await sb.rpc('beach_save_content',{k,d});if(error){say(E(error),'err');return false;}CONTENT[k]=d;say(okmsg||'Saved. It is live on the site.','ok');return true;}
 
+
+async function saveGallery(patch,msg){const{data}=await sb.from('beach_content').select('data').eq('key','gallery').maybeSingle();const cur=(data&&data.data)||CONTENT.gallery||{};
+ return saveContent('gallery',Object.assign({},cur,patch),msg);}
 async function saveSite(patch,msg){const{data}=await sb.from('beach_content').select('data').eq('key','site').maybeSingle();const cur=(data&&data.data)||CONTENT.site||{};
  return saveContent('site',Object.assign({},cur,patch),msg);}
 function mk(t,props,kids){const e=document.createElement(t);Object.assign(e,props||{});(kids||[]).forEach(c=>e.append(c));return e;}
 const PAGES=[['home','Home','index.html'],['full-detailing','Full Detailing','full-auto-detailing-services.html'],['exterior','Exterior','exterior-detailing-services.html'],['ceramic','Ceramic Coating','ceramic-coating-service.html'],['customs','Customs & Protection','customs.html'],['gallery','Gallery','gallery.html']];
 let GP=[],gpPage='gallery',gpDirty=false;
 function gpLoad(){GP=((CONTENT.gallery&&CONTENT.gallery.items)||[]).map(x=>({image:x.image,caption:x.caption||'',page:PAGES.some(p=>p[0]===x.page)?x.page:'gallery'}));gpDirty=false;}
-const gpSave=async msg=>{const ok=await saveContent('gallery',{items:GP.map(x=>({image:x.image,caption:x.caption,page:x.page}))},msg);if(ok){gpDirty=false;$('gp-save').classList.add('hide');}return ok;};
+const gpSave=async msg=>{const ok=await saveGallery({items:GP.map(x=>({image:x.image,caption:x.caption,page:x.page}))},msg);if(ok){gpDirty=false;$('gp-save').classList.add('hide');}return ok;};
 const gpMark=()=>{gpDirty=true;$('gp-save').classList.remove('hide');};
 function renderGallery(){
  const tabs=$('gp-pages');tabs.innerHTML='';
@@ -251,7 +266,7 @@ function fqRow(q,a){const d=mk('div',{className:'faqrow'});d.style.cssText='bord
 function renderFaq(){const l=$('fq-list');l.innerHTML='';((CONTENT.faq&&CONTENT.faq.items)||[]).forEach(x=>l.append(fqRow(x.question,x.answer)));}
 $('fq-add').onclick=()=>$('fq-list').append(fqRow('',''));
 $('fq-form').onsubmit=async e=>{e.preventDefault();const items=[...$('fq-list').querySelectorAll('.faqrow')].map(d=>({question:d.querySelector('input').value.trim(),answer:d.querySelector('textarea').value.trim()})).filter(x=>x.question&&x.answer);await saveContent('faq',{items});};
-async function loadEdit(){await loadContent();gpLoad();renderGallery();const mgr=role==='owner'||role==='manager';$('ed-mgr').classList.toggle('hide',!mgr);if(mgr){renderSite();renderPackages();renderFaq();loadHome();loadChrome();}}
+async function loadEdit(){await loadContent();gpLoad();LIB=((CONTENT.gallery&&CONTENT.gallery.library)||[]).map(x=>({...x}));renderLib();renderGallery();const mgr=role==='owner'||role==='manager';$('ed-mgr').classList.toggle('hide',!mgr);if(mgr){renderSite();renderPackages();renderFaq();loadHome();loadChrome();}}
 
 // ---- homepage layout editor (stored inside the "site" content as site.home)
 let HM=null,hmTab='services';
@@ -266,6 +281,7 @@ function imgField(obj,key,label){const w=mk('div');w.style.cssText='display:flex
  f.onchange=async()=>{if(!f.files[0])return;say('Uploading photo...','info');try{obj[key]=await uploadImg(f.files[0],'homepage');im.src=obj[key];say('Photo ready. Click Save homepage to publish it.','ok');hmMark();}catch(x){say(E(x),'err');}};
  const sel=mk('select');sel.append(mk('option',{value:'',textContent:'Or choose a photo already uploaded'}));
  GP.forEach(g=>sel.append(mk('option',{value:g.image,textContent:(g.caption||'Photo')+' ('+((PAGES.find(q=>q[0]===g.page)||[0,g.page])[1])+')'})));
+ LIB.forEach(g=>sel.append(mk('option',{value:g.url,textContent:'Library: '+(g.folder?g.folder+' / ':'')+(g.name||'Photo')})));
  sel.onchange=()=>{if(sel.value){obj[key]=sel.value;im.src=sel.value;hmMark();}};
  const dv=mk('button',{type:'button',className:'alt',textContent:'Choose from Google Drive'});dv.style.margin='8px 0 0';
  dv.onclick=async()=>{try{say('Opening Google Drive...','info');const r=await BDDrive.pick({root:'../',single:true});say('');if(r[0]){say('Uploading photo...','info');obj[key]=await uploadImg(r[0],'homepage');im.src=obj[key];say('Photo ready. Click Save homepage to publish it.','ok');hmMark();}}catch(x){say(E(x),'err');}};
@@ -326,6 +342,43 @@ async function loadChrome(){const base=await chDefaults().catch(()=>null);const 
  $('ch-save').textContent='Save colors, header and footer';renderPageLinks();renderChrome();}
 $('ch-save').onclick=async()=>{if(await saveSite({theme:CH.theme,nav:CH.nav,book:CH.book,footer:CH.footer},'Saved. Colors, header and footer are live.'))$('ch-save').textContent='Save colors, header and footer';};
 $('ch-reset').onclick=async()=>{if(!confirm('Put the colors, header and footer back to the original?'))return;if(await saveSite({theme:undefined,nav:undefined,book:undefined,footer:undefined},'Reset to the original look.'))loadChrome();};
+
+// ---- media library (cloud storage for photos; index kept in gallery content as "library")
+let LIB=[],libFolder='All';
+const fmtMB=b=>(b/1048576).toFixed(1)+' MB';
+function libFolders(){return [...new Set(LIB.map(x=>x.folder).filter(Boolean))].sort();}
+function renderLib(){
+ const total=LIB.reduce((a,x)=>a+(x.size||0),0);$('lib-stats').textContent=LIB.length+' photo'+(LIB.length===1?'':'s')+', about '+fmtMB(total)+' used of your 1 GB free storage.';
+ const fl=libFolders();$('lib-folders').innerHTML='';fl.forEach(f=>$('lib-folders').append(mk('option',{value:f})));
+ const tabs=$('lib-tabs');tabs.innerHTML='';['All',...fl,'No folder'].forEach(f=>{const n=f==='All'?LIB.length:f==='No folder'?LIB.filter(x=>!x.folder).length:LIB.filter(x=>x.folder===f).length;const b=mk('button',{type:'button',textContent:f+' ('+n+')'});if(f===libFolder)b.className='on';b.onclick=()=>{libFolder=f;renderLib();};tabs.append(b);});
+ const q=$('lib-search').value.trim().toLowerCase();const g=$('lib-grid');g.innerHTML='';
+ const items=LIB.filter(x=>(libFolder==='All'||(libFolder==='No folder'?!x.folder:x.folder===libFolder))&&(!q||(x.name||'').toLowerCase().includes(q)));
+ if(!items.length)g.append(mk('p',{className:'small',textContent:LIB.length?'No photos match.':'No photos yet. Upload some above.'}));
+ items.forEach(it=>{const c=mk('div');c.style.cssText='background:#0f0f0f;border:1px solid #2a2a2a;border-radius:12px;padding:8px';
+  const im=mk('img',{src:it.url,alt:it.name||'',loading:'lazy'});im.style.cssText='width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px';
+  const nm=mk('input',{value:it.name||'',maxlength:80,placeholder:'Name'});nm.style.marginTop='6px';nm.onchange=async()=>{it.name=nm.value.trim();await saveLib('Saved.');};
+  const fo=mk('input',{value:it.folder||'',maxlength:60,placeholder:'Folder'});fo.setAttribute('list','lib-folders');fo.style.marginTop='6px';fo.onchange=async()=>{it.folder=fo.value.trim();await saveLib('Saved.');renderLib();};
+  const sel=mk('select');sel.style.marginTop='6px';sel.append(mk('option',{value:'',textContent:'Use on a page...'}));PAGES.forEach(([k,l])=>sel.append(mk('option',{value:k,textContent:l+' page'})));
+  sel.onchange=async()=>{if(!sel.value)return;GP=[{image:it.url,caption:it.name||'',page:sel.value}].concat(GP);if(await gpSave('Added to the '+(PAGES.find(x=>x[0]===sel.value)||[0,sel.value])[1]+' page.'))renderGallery();sel.value='';};
+  const row=mk('div');row.style.cssText='display:flex;gap:6px;flex-wrap:wrap';
+  const cp=mk('button',{type:'button',className:'alt',textContent:'Copy link'});cp.style.margin='6px 0 0';cp.onclick=async()=>{try{await navigator.clipboard.writeText(it.url);say('Link copied.','ok');}catch(e){say(it.url,'info');}};row.append(cp);
+  if(role==='owner'||role==='manager'){const dl=mk('button',{type:'button',className:'danger',textContent:'Delete'});dl.style.margin='6px 0 0';
+   dl.onclick=async()=>{const used=GP.some(x=>x.image===it.url)||JSON.stringify(CONTENT.site||{}).includes(it.url);if(!confirm((used?'This photo is used on your site. Deleting it will leave a broken image there. ':'')+'Delete this photo from the library?'))return;
+    const path=decodeURIComponent((it.url.split('/site-media/')[1]||'').split('?')[0]);if(path){const{error}=await sb.storage.from('site-media').remove([path]);if(error){say(E(error),'err');return;}}
+    LIB=LIB.filter(x=>x.id!==it.id);await saveLib('Deleted.');renderLib();};row.append(dl);}
+  c.append(im,nm,fo,sel,row);g.append(c);});}
+async function saveLib(msg){return saveGallery({library:LIB},msg);}
+async function libAdd(files){if(!files.length){say('Choose at least one photo.','err');return;}if(files.length>40){say('Add 40 photos or fewer at a time.','err');return;}
+ $('lib-go').disabled=true;$('lib-drive').disabled=true;const folder=$('lib-folder-up').value.trim();const added=[];
+ try{for(let i=0;i<files.length;i++){const f=files[i];say('Uploading '+(i+1)+' of '+files.length+'...','info');const blob=await shrink(f);const id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);const path='library/'+id+'.jpg';
+   const{error}=await sb.storage.from('site-media').upload(path,blob,{contentType:'image/jpeg',upsert:false});if(error)throw error;
+   added.push({id,url:sb.storage.from('site-media').getPublicUrl(path).data.publicUrl,name:(f.name||'Photo').replace(/\.[^.]+$/,'').slice(0,80),folder,size:blob.size,added:new Date().toISOString()});}
+ }catch(x){say(E(x),'err');}
+ if(added.length){LIB=added.concat(LIB);if(await saveLib(added.length+' photo'+(added.length===1?'':'s')+' added to your library.')){$('lib-files').value='';}}
+ renderLib();$('lib-go').disabled=false;$('lib-drive').disabled=false;}
+$('lib-go').onclick=()=>libAdd([...$('lib-files').files]);
+$('lib-drive').onclick=async()=>{try{say('Opening Google Drive...','info');const f=await BDDrive.pick({root:'../'});say('');if(f.length)await libAdd(f);}catch(x){say(E(x),'err');}};
+$('lib-search').oninput=renderLib;
 sb.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>boot(session),0);if(ev==='PASSWORD_RECOVERY')say('Enter a new password under Security.','info');});
 sb.auth.getSession().then(({data})=>boot(data.session));
 </script></body></html>

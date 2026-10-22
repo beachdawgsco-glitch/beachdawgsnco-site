@@ -54,7 +54,7 @@ async function imgPanel(im){head('Change photo');const key=B.IMGS.get(im)||im.ge
   const r=await window.BDDrive.pick({root:'',single:true});if(!r[0]){say('');return;}say('Uploading photo...');const blob=await shrink(r[0]);const path='pages/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.jpg';
   const{error}=await sb.storage.from('site-media').upload(path,blob,{contentType:'image/jpeg'});if(error)throw error;const u=sb.storage.from('site-media').getPublicUrl(path).data.publicUrl;PE.img[key]=u;setAll(u);mark();say('Photo changed. Click Save changes to publish it.');}catch(x){say(x.message||'Drive upload failed');}}});
  panel.append(dvb);
- const{data:g}=await sb.from('beach_content').select('data').eq('key','gallery').maybeSingle();const items=(g&&g.data&&g.data.items)||[];
+ const{data:g}=await sb.from('beach_content').select('data').eq('key','gallery').maybeSingle();const items=((g&&g.data&&g.data.items)||[]).concat(((g&&g.data&&g.data.library)||[]).map(x=>({image:x.url,caption:(x.folder?x.folder+' / ':'')+(x.name||'Photo')})));
  if(items.length){const sel2=$('select');sel2.append($('option',{value:'',textContent:'Or choose a photo you already uploaded'}));items.forEach(x=>sel2.append($('option',{value:x.image,textContent:x.caption||'Photo'})));
   sel2.onchange=()=>{if(!sel2.value)return;PE.img[key]=sel2.value;setAll(sel2.value);mark();};panel.append($('label',{textContent:'Your uploaded photos'}),sel2);}
  panel.append($('button',{className:'danger',textContent:'Put the original photo back',style:'margin-top:10px',onclick:()=>{delete PE.img[key];setAll(key);mark();}}));}
