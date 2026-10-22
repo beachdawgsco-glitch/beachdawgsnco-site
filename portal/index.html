@@ -61,7 +61,7 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
   <hr style="border-color:#2a2a2a;margin:18px 0">
   <label for="gp-files" id="gp-flabel">Add photos to this page (JPEG, PNG or WebP; large photos are shrunk automatically)</label><input id="gp-files" type="file" accept="image/jpeg,image/png,image/webp" multiple>
   <label for="gp-cap">Caption for this upload (optional)</label><input id="gp-cap" maxlength="140">
-  <button id="gp-go" type="button">Upload to this page</button>
+  <button id="gp-go" type="button">Upload to this page</button><button id="gp-drive" type="button" class="alt">Choose from Google Drive</button>
   <div id="ed-mgr" class="hide">
    <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Homepage layout</h3>
    <p class="small">Change the photos and wording on the home page. Pick a section, make your changes, then click Save homepage. "Reset to original" puts the home page back the way it was built.</p>
@@ -104,7 +104,7 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
   <button id="rs-prev" class="alt">Preview backup</button><div id="rs-out"></div><button id="rs-go" class="danger hide">Restore these records</button></div>
 </section>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../drive.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 const SB_URL='https://gxjgqxqcvkfanvydbztv.supabase.co',SB_KEY='sb_publishable_pI_tA_OhNtH4sGaZ8yor-g_b7kKJ2F3';
 const sb=supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
@@ -229,14 +229,16 @@ function shrink(file){return new Promise((res,rej)=>{const url=URL.createObjectU
  im.onload=()=>{const M=2000,sc=Math.min(1,M/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);
   c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(url);c.toBlob(b=>b?res(b):rej(new Error('Could not process that photo.')),'image/jpeg',.85);};
  im.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('That file could not be read as a photo.'));};im.src=url;});}
-$('gp-go').onclick=async()=>{const files=[...$('gp-files').files];if(!files.length){say('Choose at least one photo.','err');return;}if(files.length>20){say('Upload 20 photos or fewer at a time.','err');return;}
- $('gp-go').disabled=true;const cap=$('gp-cap').value.trim();let n=0;const added=[];
+async function gpUpload(files){if(!files.length){say('Choose at least one photo.','err');return;}if(files.length>20){say('Upload 20 photos or fewer at a time.','err');return;}
+ $('gp-go').disabled=true;$('gp-drive').disabled=true;const cap=$('gp-cap').value.trim();let n=0;const added=[];
  try{for(const f of files){const blob=await shrink(f);const path='gallery/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.jpg';
    const{error}=await sb.storage.from('site-media').upload(path,blob,{contentType:'image/jpeg',upsert:false});if(error)throw error;
    const{data}=sb.storage.from('site-media').getPublicUrl(path);added.push({image:data.publicUrl,caption:cap,page:gpPage});n++;}
  }catch(x){say(E(x),'err');}
  if(added.length){GP=added.concat(GP);if(await gpSave(n+' photo'+(n===1?'':'s')+' added. Live on the page now.')){$('gp-files').value='';$('gp-cap').value='';}}
- renderGallery();$('gp-go').disabled=false;};
+ renderGallery();$('gp-go').disabled=false;$('gp-drive').disabled=false;}
+$('gp-go').onclick=()=>gpUpload([...$('gp-files').files]);
+$('gp-drive').onclick=async()=>{try{say('Opening Google Drive...','info');const f=await BDDrive.pick({root:'../'});say('');if(f.length)await gpUpload(f);}catch(x){say(E(x),'err');}};
 function renderSite(){const s=CONTENT.site||{};$('si-ph').value=s.phone_display||'';$('si-em').value=s.email||'';$('si-a1').value=s.address_line1||'';$('si-a2').value=s.address_line2||'';$('si-hr').value=s.hours||'';$('si-pe').checked=!!s.promo_enabled;$('si-pt').value=s.promo_text||'';$('si-pl').value=s.promo_link||'';}
 $('si-form').onsubmit=async e=>{e.preventDefault();const ph=$('si-ph').value.trim();const dig=ph.replace(/\D/g,'');
  await saveSite(({phone_display:ph,phone_digits:dig.length===10?'1'+dig:dig,email:$('si-em').value.trim(),address_line1:$('si-a1').value.trim(),address_line2:$('si-a2').value.trim(),hours:$('si-hr').value.trim(),promo_enabled:$('si-pe').checked,promo_text:$('si-pt').value.trim(),promo_link:$('si-pl').value.trim()}));};
@@ -265,7 +267,9 @@ function imgField(obj,key,label){const w=mk('div');w.style.cssText='display:flex
  const sel=mk('select');sel.append(mk('option',{value:'',textContent:'Or choose a photo already uploaded'}));
  GP.forEach(g=>sel.append(mk('option',{value:g.image,textContent:(g.caption||'Photo')+' ('+((PAGES.find(q=>q[0]===g.page)||[0,g.page])[1])+')'})));
  sel.onchange=()=>{if(sel.value){obj[key]=sel.value;im.src=sel.value;hmMark();}};
- side.append(f,sel);w.append(im,side);return w;}
+ const dv=mk('button',{type:'button',className:'alt',textContent:'Choose from Google Drive'});dv.style.margin='8px 0 0';
+ dv.onclick=async()=>{try{say('Opening Google Drive...','info');const r=await BDDrive.pick({root:'../',single:true});say('');if(r[0]){say('Uploading photo...','info');obj[key]=await uploadImg(r[0],'homepage');im.src=obj[key];say('Photo ready. Click Save homepage to publish it.','ok');hmMark();}}catch(x){say(E(x),'err');}};
+ side.append(f,dv,sel);w.append(im,side);return w;}
 function txt(obj,key,label,max){const w=mk('div');w.append(mk('label',{textContent:label}));const i=mk('input',{value:obj[key]||'',maxlength:max||120});i.oninput=()=>{obj[key]=i.value;hmMark();};w.append(i);return w;}
 function listBox(arr,rowFn,blank,addLabel){const box=mk('div');const draw=()=>{box.innerHTML='';
  arr.forEach((it,i)=>{const row=mk('div');row.style.cssText='border-top:1px solid #2a2a2a;padding:10px 0';row.append(...rowFn(it,i));

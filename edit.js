@@ -50,6 +50,10 @@ async function imgPanel(im){head('Change photo');const key=B.IMGS.get(im)||im.ge
   const{error}=await sb.storage.from('site-media').upload(path,blob,{contentType:'image/jpeg'});if(error)throw error;const u=sb.storage.from('site-media').getPublicUrl(path).data.publicUrl;
   PE.img[key]=u;setAll(u);mark();say('Photo changed. Click Save changes to publish it.');}catch(x){say(x.message||'Upload failed');}};
  panel.append($('label',{textContent:'Upload a new photo (this replaces it everywhere this photo appears on this page)'}),f);
+ const dvb=$('button',{className:'alt',textContent:'Choose from Google Drive',style:'margin-top:8px',onclick:async()=>{try{say('Opening Google Drive...');if(!window.BDDrive)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='drive.js';s.onload=ok;s.onerror=no;document.head.append(s);});
+  const r=await window.BDDrive.pick({root:'',single:true});if(!r[0]){say('');return;}say('Uploading photo...');const blob=await shrink(r[0]);const path='pages/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.jpg';
+  const{error}=await sb.storage.from('site-media').upload(path,blob,{contentType:'image/jpeg'});if(error)throw error;const u=sb.storage.from('site-media').getPublicUrl(path).data.publicUrl;PE.img[key]=u;setAll(u);mark();say('Photo changed. Click Save changes to publish it.');}catch(x){say(x.message||'Drive upload failed');}}});
+ panel.append(dvb);
  const{data:g}=await sb.from('beach_content').select('data').eq('key','gallery').maybeSingle();const items=(g&&g.data&&g.data.items)||[];
  if(items.length){const sel2=$('select');sel2.append($('option',{value:'',textContent:'Or choose a photo you already uploaded'}));items.forEach(x=>sel2.append($('option',{value:x.image,textContent:x.caption||'Photo'})));
   sel2.onchange=()=>{if(!sel2.value)return;PE.img[key]=sel2.value;setAll(sel2.value);mark();};panel.append($('label',{textContent:'Your uploaded photos'}),sel2);}
