@@ -32,7 +32,7 @@ const gallery=JSON.parse(read('data/gallery.json')).items;
 const seen=new Set();
 for(const [i,item] of gallery.entries()){
  assert(item&&typeof item.image==='string','Invalid photo '+i);
- assert(/^assets\/[\w.\-/]+\.(?:jpe?g|png|webp|gif|avif)$/i.test(item.image)&&!item.image.includes('..'),'Unsafe photo path '+i);
+ assert(/^assets\/[\w.~/\-]+\.(?:jpe?g|png|webp|gif|avif)$/i.test(item.image)&&!item.image.includes('..'),'Unsafe photo path '+i);
  assert(exists(item.image),'Missing portfolio image '+item.image);
  assert(!seen.has(item.image),'Duplicate gallery image: '+item.image);
  seen.add(item.image);
