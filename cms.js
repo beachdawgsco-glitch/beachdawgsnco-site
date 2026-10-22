@@ -27,17 +27,45 @@ function gallery(g){
  const valid=g.items.filter(x=>x&&typeof x.image==='string'&&/^\/?assets\/[\w.\-/]+\.(?:jpe?g|png|webp|gif|avif)$/i.test(x.image)&&!x.image.includes('..'));
  if(!valid.length)return; // Preserve original static portfolio as a fallback.
  const dlg=document.querySelector('#lightbox');
+ const cats=['All','Vehicle Showcase','Interior','Wheels & Tires','Detailing in Action','Paint Polishing','Motorcycles','Behind the Scenes'];
+ if(!box.dataset.cmsControls){
+  const bar=document.createElement('div');
+  bar.className='gallery-filters';
+  bar.setAttribute('aria-label','Filter portfolio photos');
+  cats.forEach(cat=>{
+   const b=document.createElement('button');b.type='button';b.textContent=cat;b.className='gallery-filter';
+   b.setAttribute('aria-pressed',String(cat==='All'));
+   b.addEventListener('click',()=>{
+    bar.querySelectorAll('button').forEach(z=>z.setAttribute('aria-pressed',String(z===b)));
+    box.querySelectorAll('.photo').forEach(el=>{el.hidden=cat!=='All'&&el.dataset.category!==cat;});
+   });
+   bar.appendChild(b);
+  });
+  box.before(bar);
+  box.dataset.cmsControls='true';
+ }
  const frag=document.createDocumentFragment();
  valid.forEach((x,i)=>{
   const src=x.image.replace(/^\//,'');
   const b=document.createElement('button');
-  b.className='photo';b.type='button';b.setAttribute('aria-label','Enlarge photo '+(i+1));b.dataset.image=src;
+  b.className='photo';b.type='button';b.setAttribute('aria-label','Enlarge photo '+(i+1));b.dataset.image=src;b.dataset.category=String(x.category||'Vehicle Showcase');
   const img=document.createElement('img');img.src=src;img.alt=String(x.caption||'Beach Dawgs & Co. work');img.loading='lazy';
   b.appendChild(img);
   b.addEventListener('click',()=>{if(dlg){const big=dlg.querySelector('img');if(big){big.src=src;big.alt=img.alt;}dlg.showModal();}});
   frag.appendChild(b);
  });
  box.replaceChildren(frag); // CMS is the source of truth; do not duplicate hard-coded photos.
+ const onHome=document.querySelector('#cms-featured-work');
+ if(onHome){
+  const picks=valid.filter(x=>x.featured===true).slice(0,8);
+  onHome.replaceChildren();
+  picks.forEach(x=>{
+   const fig=document.createElement('figure');fig.className='cms-featured-item';
+   const im=document.createElement('img');im.src=x.image.replace(/^\\//,'');im.alt=String(x.caption||'Beach Dawgs work');im.loading='lazy';
+   const cap=document.createElement('figcaption');cap.textContent=String(x.caption||'');
+   fig.append(im,cap);onHome.appendChild(fig);
+  });
+ }
 }
 Promise.all(['site','packages','faq','gallery'].map(get)).then(r=>{site(r[0]);packages(r[1]);faq(r[2]);gallery(r[3]);});
 })();
