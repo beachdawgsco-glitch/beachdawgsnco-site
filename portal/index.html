@@ -1,0 +1,142 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Account | Beach Dawgs &amp; Co.</title>
+<style>
+:root{--o:#ff7a00;--bg:#0b0b0b;--card:#151515;--line:#2a2a2a;--tx:#f2f2f2;--mut:#a8a8a8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}header a{color:var(--tx);text-decoration:none;font-weight:800;letter-spacing:.04em}header b{color:var(--o)}
+main{max-width:760px;margin:0 auto;padding:24px 16px 80px}h1{margin:.2em 0 .4em;font-size:28px}h2{font-size:20px;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}input,select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0f0f0f;color:var(--tx);font:inherit}
+button{background:var(--o);color:#111;border:0;border-radius:99px;padding:12px 22px;font-weight:800;font:inherit;font-weight:800;cursor:pointer;margin:14px 8px 0 0}button.alt{background:#2a2a2a;color:var(--tx)}button.danger{background:#7a1f1f;color:#fff}button:disabled{opacity:.5}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button{margin:0;padding:9px 16px}.tabs button.on{background:var(--o);color:#111}.tabs button:not(.on){background:#222;color:var(--tx)}
+.msg{margin:12px 0;padding:10px 14px;border-radius:10px;font-size:14px}.msg.ok{background:#12301c;color:#9be7b0}.msg.err{background:#351616;color:#ffb3b3}.msg.info{background:#1d2530;color:#b9d4ff}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:center}.row:first-child{border-top:0}.small{font-size:13px;color:var(--mut)}.hide{display:none}
+a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200px;height:200px}code{background:#222;padding:2px 6px;border-radius:6px;word-break:break-all}
+</style></head><body>
+<header><a href="../">BEACH DAWGS <b>&amp; CO.</b></a><span id="who" class="small"></span></header>
+<main>
+<div id="msg" class="msg hide" role="status"></div>
+
+<section id="auth" class="hide">
+ <h1>Account</h1><p class="small">Save your vehicles and contact preferences. Bookings and payments still happen through our booking page.</p>
+ <div class="card"><div class="tabs"><button id="t-in" class="on">Sign in</button><button id="t-up">Create account</button></div>
+ <form id="authform"><label for="em">Email</label><input id="em" type="email" autocomplete="email" required>
+ <label for="pw">Password (at least 10 characters)</label><input id="pw" type="password" autocomplete="current-password" minlength="10" required>
+ <button id="authgo" type="submit">Sign in</button><button id="forgot" type="button" class="alt">Forgot password</button></form></div>
+ <p class="small">By creating an account you agree to our <a href="../privacy-policy">Privacy Policy</a>. We email a link to verify your address before the account is active.</p>
+</section>
+
+<section id="app" class="hide">
+ <h1>Your account</h1>
+ <div class="tabs" id="apptabs"><button data-p="p-profile" class="on">Profile</button><button data-p="p-veh">Vehicles</button><button data-p="p-priv">Privacy</button><button data-p="p-sec">Security</button><button data-p="p-staff" id="tab-staff" class="hide">Owner tools</button></div>
+
+ <div id="p-profile" class="card pane"><h2>Profile</h2><form id="profform">
+  <label for="fn">Full name</label><input id="fn" maxlength="160" autocomplete="name">
+  <label for="ph">Phone</label><input id="ph" maxlength="40" autocomplete="tel">
+  <label for="cp">How should we contact you?</label><select id="cp"><option value="email">Email</option><option value="phone">Phone or text</option><option value="none">Only when needed for an appointment</option></select>
+  <button type="submit">Save</button></form></div>
+
+ <div id="p-veh" class="card pane hide"><h2>Your vehicles</h2><div id="vlist"></div>
+  <form id="vform"><label for="vy">Year</label><input id="vy" type="number" min="1900" max="2100" required>
+  <label for="vm">Make</label><input id="vm" maxlength="80" required><label for="vmo">Model</label><input id="vmo" maxlength="120" required><label for="vc">Color (optional)</label><input id="vc" maxlength="80">
+  <button type="submit">Add vehicle</button></form></div>
+
+ <div id="p-priv" class="card pane hide"><h2>Your data</h2><p class="small">You can ask us for a copy of your data or ask us to delete it. We review each request and reply by email.</p>
+  <button id="rq-export" class="alt">Request a copy of my data</button><button id="rq-del" class="danger">Request account deletion</button><div id="rqlist"></div></div>
+
+ <div id="p-sec" class="card pane hide"><h2>Two-step login</h2><p class="small">Required for owner and staff tools. Use an authenticator app such as Google Authenticator, 1Password or Authy.</p>
+  <div id="mfa-status"></div><div id="mfa-enroll" class="hide"><img id="mfa-qr" class="qr" alt="Scan this code with your authenticator app"><p class="small">Cannot scan? Enter this key: <code id="mfa-secret"></code></p></div>
+  <form id="mfa-form" class="hide"><label for="mfa-code">6-digit code</label><input id="mfa-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required><button type="submit" id="mfa-go">Verify</button></form>
+  <button id="mfa-start" class="alt">Set up two-step login</button>
+  <hr style="border-color:#2a2a2a;margin:22px 0"><h2>Password</h2><form id="pwform"><label for="np">New password (at least 10 characters)</label><input id="np" type="password" minlength="10" autocomplete="new-password" required><button type="submit" class="alt">Change password</button></form></div>
+
+ <div id="p-staff" class="card pane hide"><h2>Owner tools</h2>
+  <h3>Staff access</h3><div id="stafflist" class="small"></div>
+  <form id="staffform"><label for="se">Person's email (they must create an account and verify it first)</label><input id="se" type="email" required>
+   <label for="sr">Role</label><select id="sr"><option value="staff">Staff</option><option value="manager">Manager</option></select>
+   <button type="submit">Give access</button></form>
+  <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Encrypted backup</h3><p class="small">Downloads customer profiles, vehicles and privacy requests as a file locked with a passphrase you choose. The passphrase is never sent anywhere. If you lose it, the backup cannot be opened.</p>
+  <label for="bp">Backup passphrase (at least 14 characters)</label><input id="bp" type="password" minlength="14" autocomplete="new-password">
+  <button id="bk-go">Download encrypted backup</button>
+  <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Restore from backup</h3><p class="small">Restore updates matching records from the file. It never deletes anything. You see what is in the file before anything changes.</p>
+  <label for="rf">Backup file</label><input id="rf" type="file" accept=".json,.bdbak"><label for="rp">Backup passphrase</label><input id="rp" type="password" autocomplete="off">
+  <button id="rs-prev" class="alt">Preview backup</button><div id="rs-out"></div><button id="rs-go" class="danger hide">Restore these records</button></div>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const SB_URL='https://gxjgqxqcvkfanvydbztv.supabase.co',SB_KEY='sb_publishable_pI_tA_OhNtH4sGaZ8yor-g_b7kKJ2F3';
+const sb=supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const $=id=>document.getElementById(id);let mode='in',user=null,role=null,restoreSnap=null;
+function say(t,k){const m=$('msg');m.textContent=t;m.className='msg '+(k||'info');if(!t)m.className='msg hide';}
+const E=e=>(e&&e.message)?e.message:'Something went wrong. Please try again.';
+const PAGE=location.origin+location.pathname;
+$('t-in').onclick=()=>setMode('in');$('t-up').onclick=()=>setMode('up');
+function setMode(m){mode=m;$('t-in').className=m==='in'?'on':'';$('t-up').className=m==='up'?'on':'';$('authgo').textContent=m==='in'?'Sign in':'Create account';$('pw').autocomplete=m==='in'?'current-password':'new-password';say('');}
+$('authform').onsubmit=async e=>{e.preventDefault();say('');const email=$('em').value.trim(),password=$('pw').value;$('authgo').disabled=true;
+ try{if(mode==='up'){const{error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:PAGE}});if(error)throw error;say('Check your email for a link to verify your account, then come back and sign in.','ok');}
+ else{const{error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;}}catch(x){say(E(x),'err');}$('authgo').disabled=false;};
+$('forgot').onclick=async()=>{const email=$('em').value.trim();if(!email){say('Enter your email above first.','err');return;}
+ const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:PAGE});say(error?E(error):'If that email has an account, a reset link is on its way.',error?'err':'ok');};
+$('pwform').onsubmit=async e=>{e.preventDefault();const{error}=await sb.auth.updateUser({password:$('np').value});say(error?E(error):'Password changed.',error?'err':'ok');if(!error)$('np').value='';};
+async function signOut(){await sb.auth.signOut();}
+$('apptabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#apptabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('hide',p.id!==b.dataset.p));say('');};
+function show(id){document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('hide',p.id!==id));}
+async function boot(session){
+ user=session&&session.user;
+ $('auth').classList.toggle('hide',!!user);$('app').classList.toggle('hide',!user);
+ $('who').innerHTML='';if(!user)return;
+ const out=document.createElement('a');out.href='#';out.textContent='Sign out ('+user.email+')';out.onclick=e=>{e.preventDefault();signOut();};$('who').appendChild(out);
+ await Promise.all([loadProfile(),loadVehicles(),loadRequests(),loadAccess(),loadMfa()]);}
+async function loadProfile(){const{data}=await sb.from('beach_profiles').select('*').eq('user_id',user.id).maybeSingle();
+ $('fn').value=data?data.full_name:'';$('ph').value=data?data.phone:'';$('cp').value=data?data.communication_preference:'email';}
+$('profform').onsubmit=async e=>{e.preventDefault();const{error}=await sb.from('beach_profiles').upsert({user_id:user.id,full_name:$('fn').value.trim(),phone:$('ph').value.trim(),communication_preference:$('cp').value,updated_at:new Date().toISOString()});say(error?E(error):'Saved.',error?'err':'ok');};
+async function loadVehicles(){const{data,error}=await sb.from('beach_vehicles').select('*').order('created_at');const l=$('vlist');l.innerHTML='';
+ if(error){say(E(error),'err');return;}if(!data.length){l.innerHTML='<p class="small">No vehicles saved yet.</p>';}
+ data.forEach(v=>{const r=document.createElement('div');r.className='row';const s=document.createElement('span');s.textContent=[v.year,v.make,v.model,v.color].filter(Boolean).join(' ');const b=document.createElement('button');b.className='alt';b.style.margin='0';b.textContent='Remove';
+  b.onclick=async()=>{const{error}=await sb.from('beach_vehicles').delete().eq('id',v.id);if(error)say(E(error),'err');else loadVehicles();};r.append(s,b);l.appendChild(r);});}
+$('vform').onsubmit=async e=>{e.preventDefault();const{error}=await sb.from('beach_vehicles').insert({user_id:user.id,year:+$('vy').value,make:$('vm').value.trim(),model:$('vmo').value.trim(),color:$('vc').value.trim()});
+ if(error)say(E(error),'err');else{$('vform').reset();say('Vehicle added.','ok');loadVehicles();}};
+async function loadRequests(){const{data}=await sb.from('beach_privacy_requests').select('*').eq('user_id',user.id).order('created_at',{ascending:false});const l=$('rqlist');l.innerHTML='';
+ (data||[]).forEach(r=>{const d=document.createElement('div');d.className='row small';d.textContent=(r.kind==='export'?'Data copy':'Deletion')+' request, '+r.status+', '+new Date(r.created_at).toLocaleDateString();l.appendChild(d);});}
+async function rq(kind){if(kind==='deletion'&&!confirm('Request deletion of your account and saved information?'))return;
+ const{error}=await sb.from('beach_privacy_requests').insert({user_id:user.id,kind});say(error?E(error):'Request received. We will reply by email.',error?'err':'ok');loadRequests();}
+$('rq-export').onclick=()=>rq('export');$('rq-del').onclick=()=>rq('deletion');
+async function loadAccess(){const{data}=await sb.rpc('beach_my_access');role=data&&data.role||null;$('tab-staff').classList.toggle('hide',role!=='owner');
+ if(role&&role!=='owner'){say('Signed in with '+role+' access.','info');}if(role==='owner')loadStaff();}
+async function loadStaff(){const{data,error}=await sb.rpc('beach_staff_directory');const l=$('stafflist');l.innerHTML='';if(error){l.textContent=E(error);return;}
+ (data||[]).forEach(m=>{const r=document.createElement('div');r.className='row';const s=document.createElement('span');s.textContent=m.email+' ('+m.role+(m.active?'':', deactivated')+')';r.appendChild(s);
+  if(m.role!=='owner'){const b=document.createElement('button');b.className='alt';b.style.margin='0';b.textContent=m.active?'Deactivate':'Reactivate';b.onclick=()=>manage(m.email,m.role,!m.active);r.appendChild(b);}l.appendChild(r);});}
+async function manage(email,r,en){const{error}=await sb.rpc('beach_manage_staff',{target_email:email,staff_role:r,enabled:en});say(error?E(error):'Updated.',error?'err':'ok');loadStaff();}
+$('staffform').onsubmit=e=>{e.preventDefault();manage($('se').value.trim(),$('sr').value,true);$('staffform').reset();};
+async function loadMfa(){const{data}=await sb.auth.mfa.listFactors();const ok=(data&&data.totp||[]).filter(f=>f.status==='verified');
+ $('mfa-status').innerHTML='';const p=document.createElement('p');p.textContent=ok.length?'Two-step login is on for this account.':'Two-step login is not set up.';$('mfa-status').appendChild(p);
+ $('mfa-start').classList.toggle('hide',ok.length>0);
+ if(ok.length){const{data:a}=await sb.auth.mfa.getAuthenticatorAssuranceLevel();if(a&&a.currentLevel==='aal1'&&a.nextLevel==='aal2'){window._chal=ok[0].id;$('mfa-form').classList.remove('hide');$('mfa-go').textContent='Verify and unlock';p.textContent='Enter your 6-digit code to unlock owner and staff tools.';}else{$('mfa-form').classList.add('hide');}}}
+$('mfa-start').onclick=async()=>{const{data:f}=await sb.auth.mfa.listFactors();for(const x of(f&&f.all||[]))if(x.status!=='verified')await sb.auth.mfa.unenroll({factorId:x.id});
+ const{data,error}=await sb.auth.mfa.enroll({factorType:'totp',friendlyName:'Authenticator '+Date.now()});if(error){say(E(error),'err');return;}
+ window._chal=data.id;$('mfa-qr').src=data.totp.qr_code;$('mfa-secret').textContent=data.totp.secret;$('mfa-enroll').classList.remove('hide');$('mfa-form').classList.remove('hide');$('mfa-start').classList.add('hide');};
+$('mfa-form').onsubmit=async e=>{e.preventDefault();const{error}=await sb.auth.mfa.challengeAndVerify({factorId:window._chal,code:$('mfa-code').value.trim()});
+ if(error){say(E(error),'err');return;}$('mfa-code').value='';$('mfa-enroll').classList.add('hide');say('Two-step login verified.','ok');await sb.auth.refreshSession();boot((await sb.auth.getSession()).data.session);};
+// ---- encrypted backup (AES-256-GCM, key from passphrase via PBKDF2-SHA256, all in this browser)
+const enc=new TextEncoder(),dec=new TextDecoder(),ITER=600000;
+const b64=u=>btoa(String.fromCharCode(...new Uint8Array(u))),unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function key(pass,salt,iter){const base=await crypto.subtle.importKey('raw',enc.encode(pass),'PBKDF2',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:iter,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);}
+$('bk-go').onclick=async()=>{const pass=$('bp').value;if(pass.length<14){say('Use a passphrase of at least 14 characters.','err');return;}
+ $('bk-go').disabled=true;try{const{data,error}=await sb.rpc('beach_export_records');if(error)throw error;
+ const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+ const payload=JSON.stringify({exportedAt:new Date().toISOString(),records:data});
+ const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},await key(pass,salt,ITER),enc.encode(payload));
+ const file=JSON.stringify({format:'beach-dawgs-backup',v:1,kdf:'PBKDF2-SHA256',iter:ITER,cipher:'AES-256-GCM',salt:b64(salt),iv:b64(iv),data:b64(ct)});
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([file],{type:'application/json'}));a.download='beach-dawgs-backup-'+new Date().toISOString().slice(0,10)+'.bdbak.json';a.click();URL.revokeObjectURL(a.href);
+ $('bp').value='';say('Encrypted backup downloaded. Store it somewhere safe and keep the passphrase separate.','ok');}catch(x){say(E(x),'err');}$('bk-go').disabled=false;};
+$('rs-prev').onclick=async()=>{restoreSnap=null;$('rs-go').classList.add('hide');$('rs-out').textContent='';const f=$('rf').files[0];if(!f||!$('rp').value){say('Choose the backup file and enter its passphrase.','err');return;}
+ try{if(f.size>8*1024*1024)throw new Error('That file is too large to be a backup.');const j=JSON.parse(await f.text());if(j.format!=='beach-dawgs-backup'||j.v!==1||j.iter>2000000||j.iter<100000)throw new Error('This is not a valid backup file.');
+ const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(j.iv)},await key($('rp').value,unb64(j.salt),j.iter),unb64(j.data)).catch(()=>{throw new Error('Wrong passphrase or damaged file.');});
+ const o=JSON.parse(dec.decode(pt));restoreSnap=o.records;const r=restoreSnap;
+ $('rs-out').innerHTML='';const p=document.createElement('p');p.className='small';p.textContent='Backup from '+new Date(o.exportedAt).toLocaleString()+': '+(r.profiles||[]).length+' profiles, '+(r.vehicles||[]).length+' vehicles. Privacy requests in the file are kept for reference and are not restored.';$('rs-out').appendChild(p);$('rs-go').classList.remove('hide');say('');}catch(x){say(E(x),'err');}};
+$('rs-go').onclick=async()=>{if(!restoreSnap||!confirm('Restore these records now? Matching records will be overwritten with the backup values.'))return;
+ const{data,error}=await sb.rpc('beach_restore_records',{snapshot:restoreSnap});if(error){say(E(error),'err');return;}say('Restored '+data.profiles+' profiles and '+data.vehicles+' vehicles.','ok');$('rs-go').classList.add('hide');restoreSnap=null;};
+sb.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>boot(session),0);if(ev==='PASSWORD_RECOVERY')say('Enter a new password under Security.','info');});
+sb.auth.getSession().then(({data})=>boot(data.session));
+</script></body></html>
