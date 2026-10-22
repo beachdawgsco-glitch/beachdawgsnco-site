@@ -61,7 +61,7 @@ function gallery(g){
   onHome.replaceChildren();
   picks.forEach(x=>{
    const fig=document.createElement('figure');fig.className='cms-featured-item';
-   const im=document.createElement('img');im.src=x.image.replace(/^\\//,'');im.alt=String(x.caption||'Beach Dawgs work');im.loading='lazy';
+    const im=document.createElement('img');im.src=String(x.image).replace(/^[/]/,'');im.alt=String(x.caption||'Beach Dawgs work');im.loading='lazy';
    const cap=document.createElement('figcaption');cap.textContent=String(x.caption||'');
    fig.append(im,cap);onHome.appendChild(fig);
   });
