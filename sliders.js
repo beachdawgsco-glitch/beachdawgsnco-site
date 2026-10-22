@@ -1,9 +1,9 @@
-document.querySelectorAll('.compare input').forEach(input=>{
+function bdCompare(root){root.querySelectorAll('.compare input').forEach(input=>{
  const frame=input.closest('.compare');
  const left=frame.querySelector('.left').textContent,right=frame.querySelector('.right').textContent;
  input.addEventListener('input',()=>{frame.style.setProperty('--split',input.value+'%');input.setAttribute('aria-valuetext',`${input.value} percent ${left}, ${100-input.value} percent ${right}`)});
-});
-document.querySelectorAll('.carousel').forEach(carousel=>{
+});}
+function bdCarousel(root){root.querySelectorAll('.carousel').forEach(carousel=>{
  const track=carousel.querySelector('.carousel-track'),slides=[...track.children],buttons=carousel.querySelectorAll('button');
  const step=()=>slides[0].getBoundingClientRect().width+20;
  const current=()=>Math.round(track.scrollLeft/step());
@@ -11,4 +11,6 @@ document.querySelectorAll('.carousel').forEach(carousel=>{
  buttons.forEach(button=>button.addEventListener('click',()=>track.scrollBy({left:Number(button.dataset.direction)*step(),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})));
  track.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();
  track.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();track.scrollBy({left:(e.key==='ArrowRight'?1:-1)*step(),behavior:'smooth'})}});
-});
+});}
+window.bdCompare=bdCompare;window.bdCarousel=bdCarousel;
+bdCompare(document);bdCarousel(document);

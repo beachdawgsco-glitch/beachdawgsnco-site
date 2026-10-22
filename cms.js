@@ -32,9 +32,22 @@ function gallery(g){if(!g||!g.items)return;
  const sec=document.createElement('section');sec.className='section cms-photos';sec.innerHTML='<div style="max-width:1200px;margin:0 auto;padding:0 20px"><span class="eyebrow">OUR WORK</span><h2>RECENT WORK</h2><div class="cms-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:16px"></div></div>';
  const grid=sec.querySelector('.cms-grid');mine.forEach((x,i)=>{const b=tile(x,i);b.style.cssText='padding:0;border:0;background:none;cursor:zoom-in;border-radius:12px;overflow:hidden;aspect-ratio:4/3';b.firstChild.style.cssText='width:100%;height:100%;object-fit:cover;display:block';grid.append(b);});
  const ft=document.querySelector('footer');if(ft)ft.before(sec);else document.body.append(sec);}
+const imgUrl=x=>{x=String(x||'').trim();if(/^https:\/\/[^\s"'<>]+$/.test(x))return esc(x);if(/^\/?assets\/[\w.~%\/-]+$/.test(x))return esc(x.replace(/^\//,''));return '';};
+function home(h){if(!h||!/\/(index\.html)?$/.test(location.pathname))return;
+ const hero=document.querySelector('.hero-bg');if(hero&&imgUrl(h.hero))hero.src=imgUrl(h.hero).replace(/&amp;/g,'&');
+ const cards=[...document.querySelectorAll('#services .service-card')];
+ (h.services||[]).forEach((c,i)=>{const a=cards[i];if(!a||!c)return;const im=a.querySelector('img'),u=imgUrl(c.image);if(u&&im)im.src=u.replace(/&amp;/g,'&');
+  if(c.title){if(im)im.alt=c.title;const h3=a.querySelector('h3');if(h3&&h3.firstChild)h3.firstChild.textContent=c.title+' ';}
+  const p=a.querySelector('p');if(c.text&&p)p.textContent=c.text;if(c.link)a.href=safeUrl(c.link);});
+ const grid=document.querySelector('#work .comparison-grid');
+ if(grid&&h.compare&&h.compare.length){grid.innerHTML=h.compare.map(c=>'<article class="comparison-card"><div class="compare" style="--split:50%"><img src="'+imgUrl(c.b)+'" alt="'+esc(c.title)+': '+esc(c.lb)+'" loading="lazy"><img class="compare-top" src="'+imgUrl(c.a)+'" alt="'+esc(c.title)+': '+esc(c.la)+'" loading="lazy"><span class="view-label left">'+esc(c.la)+'</span><span class="view-label right">'+esc(c.lb)+'</span><span class="compare-line" aria-hidden="true"><b>‹ ›</b></span><input type="range" min="0" max="100" value="50" aria-label="Reveal '+esc(c.title)+' views" aria-valuetext="50 percent '+esc(c.la)+', 50 percent '+esc(c.lb)+'"></div><h3>'+esc(c.title)+'</h3><p>'+esc(c.sub)+'</p><small>↔ DRAG TO EXPLORE</small></article>').join('');if(window.bdCompare)bdCompare(grid);}
+ const car=document.querySelector('#portfolio .carousel');
+ if(car&&h.slides&&h.slides.length){const n=h.slides.length;const pad=i=>String(i+1).padStart(2,'0');
+  const html='<div class="carousel" role="region" aria-roledescription="carousel" aria-label="Beach Dawgs portfolio"><div class="carousel-track" tabindex="0" aria-label="Scrollable vehicle photo gallery">'+h.slides.map((s,i)=>'<figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="'+(i+1)+' of '+n+'"><a href="'+esc(safeUrl(s.link||'gallery.html'))+'"><img src="'+imgUrl(s.image)+'" alt="'+esc(s.title||'Beach Dawgs vehicle care photo '+(i+1))+'" loading="lazy"></a><figcaption><span>'+esc(s.title||'BEACH DAWGS & CO.')+'</span><b>'+pad(i)+' / '+pad(n-1)+'</b></figcaption></figure>').join('')+'</div><div class="carousel-controls"><button type="button" data-direction="-1" aria-label="Previous gallery photo">←</button><span class="carousel-status" aria-live="polite">1 / '+n+'</span><button type="button" data-direction="1" aria-label="Next gallery photo">→</button></div></div>';
+  const t=document.createElement('div');t.innerHTML=html;const nc=t.firstChild;car.replaceWith(nc);if(window.bdCarousel)bdCarousel(nc.parentNode);}}
 const SB='https://gxjgqxqcvkfanvydbztv.supabase.co',KEY='sb_publishable_pI_tA_OhNtH4sGaZ8yor-g_b7kKJ2F3';
 const db=()=>{const c=new AbortController();const t=setTimeout(()=>c.abort(),4000);
  return fetch(SB+'/rest/v1/beach_content?select=key,data',{headers:{apikey:KEY},signal:c.signal,cache:'no-store'}).then(r=>r.ok?r.json():[]).then(a=>{clearTimeout(t);const m={};a.forEach(x=>{if(x&&x.key&&x.data)m[x.key]=x.data;});return m;}).catch(()=>({}));};
 const names=['site','packages','faq','gallery'];
-Promise.all([db(),Promise.all(names.map(get))]).then(([m,r])=>{const v=names.map((n,i)=>m[n]||r[i]);site(v[0]);packages(v[1]);faq(v[2]);gallery(v[3]);});
+Promise.all([db(),Promise.all(names.map(get))]).then(([m,r])=>{const v=names.map((n,i)=>m[n]||r[i]);site(v[0]);home(v[0]&&v[0].home);packages(v[1]);faq(v[2]);gallery(v[3]);});
 })();
