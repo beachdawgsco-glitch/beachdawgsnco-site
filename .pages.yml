@@ -16,8 +16,16 @@ content:
             label: Photo
             type: image
           - name: caption
-            label: Description (e.g. "2024 Porsche 911, ceramic coating")
+            label: Photo description (describe only what is visible)
             type: string
+          - name: category
+            label: Gallery category
+            type: select
+            options:
+              values: [Vehicle Showcase, Interior, Wheels & Tires, Detailing in Action, Paint Polishing, Motorcycles, Behind the Scenes]
+          - name: featured
+            label: Featured on homepage
+            type: boolean
   - name: site
     label: Business info and promo banner
     type: file
