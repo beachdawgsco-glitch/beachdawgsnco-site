@@ -224,7 +224,7 @@ function renderGallery(){
  const l=$('gp-list');l.innerHTML='';const idx=GP.map((x,i)=>i).filter(i=>GP[i].page===gpPage);
  if(!idx.length)l.append(mk('p',{className:'small',textContent:'No photos added to this page yet.'}));
  idx.forEach((gi,pos)=>{const it=GP[gi];const row=mk('div',{className:'row'});row.style.flexWrap='wrap';
-  const img=mk('img',{src:it.image,alt:it.caption||'',loading:'lazy'});img.style.cssText='width:88px;height:66px;object-fit:cover;border-radius:8px';
+  const img=mk('img',{src:dispUrl(it.image),alt:it.caption||'',loading:'lazy'});img.style.cssText='width:88px;height:66px;object-fit:cover;border-radius:8px';
   const mid=mk('div');mid.style.cssText='flex:1;min-width:180px';
   const cap=mk('input',{value:it.caption,maxlength:140,placeholder:'Caption'});cap.oninput=()=>{it.caption=cap.value;gpMark();};
   const mv=mk('select');PAGES.forEach(([k,label])=>mv.append(mk('option',{value:k,textContent:(k===gpPage?'On: ':'Move to: ')+label,selected:k===gpPage})));
@@ -266,7 +266,7 @@ function fqRow(q,a){const d=mk('div',{className:'faqrow'});d.style.cssText='bord
 function renderFaq(){const l=$('fq-list');l.innerHTML='';((CONTENT.faq&&CONTENT.faq.items)||[]).forEach(x=>l.append(fqRow(x.question,x.answer)));}
 $('fq-add').onclick=()=>$('fq-list').append(fqRow('',''));
 $('fq-form').onsubmit=async e=>{e.preventDefault();const items=[...$('fq-list').querySelectorAll('.faqrow')].map(d=>({question:d.querySelector('input').value.trim(),answer:d.querySelector('textarea').value.trim()})).filter(x=>x.question&&x.answer);await saveContent('faq',{items});};
-async function loadEdit(){await loadContent();gpLoad();LIB=((CONTENT.gallery&&CONTENT.gallery.library)||[]).map(x=>({...x}));renderLib();renderGallery();const mgr=role==='owner'||role==='manager';$('ed-mgr').classList.toggle('hide',!mgr);if(mgr){renderSite();renderPackages();renderFaq();loadHome();loadChrome();}}
+async function loadEdit(){await loadContent();gpLoad();LIB=((CONTENT.gallery&&CONTENT.gallery.library)||[]).map(x=>({...x}));if(!(CONTENT.gallery&&CONTENT.gallery.library)){try{const r=await fetch('../data/library.json',{cache:'no-cache'});if(r.ok)LIB=await r.json();}catch(e){}}renderLib();renderGallery();const mgr=role==='owner'||role==='manager';$('ed-mgr').classList.toggle('hide',!mgr);if(mgr){renderSite();renderPackages();renderFaq();loadHome();loadChrome();}}
 
 // ---- homepage layout editor (stored inside the "site" content as site.home)
 let HM=null,hmTab='services';
@@ -345,6 +345,7 @@ $('ch-reset').onclick=async()=>{if(!confirm('Put the colors, header and footer b
 
 // ---- media library (cloud storage for photos; index kept in gallery content as "library")
 let LIB=[],libFolder='All';
+const libSrc=u=>/^https?:/.test(u||'')?u:'../'+String(u||'').replace(/^\//,'');
 const fmtMB=b=>(b/1048576).toFixed(1)+' MB';
 function libFolders(){return [...new Set(LIB.map(x=>x.folder).filter(Boolean))].sort();}
 function renderLib(){
@@ -355,13 +356,13 @@ function renderLib(){
  const items=LIB.filter(x=>(libFolder==='All'||(libFolder==='No folder'?!x.folder:x.folder===libFolder))&&(!q||(x.name||'').toLowerCase().includes(q)));
  if(!items.length)g.append(mk('p',{className:'small',textContent:LIB.length?'No photos match.':'No photos yet. Upload some above.'}));
  items.forEach(it=>{const c=mk('div');c.style.cssText='background:#0f0f0f;border:1px solid #2a2a2a;border-radius:12px;padding:8px';
-  const im=mk('img',{src:it.url,alt:it.name||'',loading:'lazy'});im.style.cssText='width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px';
+  const im=mk('img',{src:libSrc(it.url),alt:it.name||'',loading:'lazy'});im.style.cssText='width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px';
   const nm=mk('input',{value:it.name||'',maxlength:80,placeholder:'Name'});nm.style.marginTop='6px';nm.onchange=async()=>{it.name=nm.value.trim();await saveLib('Saved.');};
   const fo=mk('input',{value:it.folder||'',maxlength:60,placeholder:'Folder'});fo.setAttribute('list','lib-folders');fo.style.marginTop='6px';fo.onchange=async()=>{it.folder=fo.value.trim();await saveLib('Saved.');renderLib();};
   const sel=mk('select');sel.style.marginTop='6px';sel.append(mk('option',{value:'',textContent:'Use on a page...'}));PAGES.forEach(([k,l])=>sel.append(mk('option',{value:k,textContent:l+' page'})));
   sel.onchange=async()=>{if(!sel.value)return;GP=[{image:it.url,caption:it.name||'',page:sel.value}].concat(GP);if(await gpSave('Added to the '+(PAGES.find(x=>x[0]===sel.value)||[0,sel.value])[1]+' page.'))renderGallery();sel.value='';};
   const row=mk('div');row.style.cssText='display:flex;gap:6px;flex-wrap:wrap';
-  const cp=mk('button',{type:'button',className:'alt',textContent:'Copy link'});cp.style.margin='6px 0 0';cp.onclick=async()=>{try{await navigator.clipboard.writeText(it.url);say('Link copied.','ok');}catch(e){say(it.url,'info');}};row.append(cp);
+  const cp=mk('button',{type:'button',className:'alt',textContent:'Copy link'});cp.style.margin='6px 0 0';cp.onclick=async()=>{try{await navigator.clipboard.writeText(new URL(libSrc(it.url),location.href).href);say('Link copied.','ok');}catch(e){say(it.url,'info');}};row.append(cp);
   if(role==='owner'||role==='manager'){const dl=mk('button',{type:'button',className:'danger',textContent:'Delete'});dl.style.margin='6px 0 0';
    dl.onclick=async()=>{const used=GP.some(x=>x.image===it.url)||JSON.stringify(CONTENT.site||{}).includes(it.url);if(!confirm((used?'This photo is used on your site. Deleting it will leave a broken image there. ':'')+'Delete this photo from the library?'))return;
     const path=decodeURIComponent((it.url.split('/site-media/')[1]||'').split('?')[0]);if(path){const{error}=await sb.storage.from('site-media').remove([path]);if(error){say(E(error),'err');return;}}
