@@ -1,0 +1,747 @@
+{
+  "snapshot_date": "2026-10-19",
+  "live_verified": false,
+  "pricing_note": "Prices are based on the October 19 Urable handoff and require confirmation in the current Urable account. Vehicle size and condition affect actual pricing. Shop/mobile eligibility is a proposed website grouping pending verification.",
+  "items": [
+    {
+      "name": "Poseidon's Wake — 10-Year Package",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $2,250",
+      "description": "Premium 10-year coating package; vehicle-size pricing in Urable.",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=vttZKqqTuxG9mQGIbpSo",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Poseidon's Wake + Polish — 10-Year",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $1,950",
+      "description": "Long-term coating with paint enhancement.",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=ixIjytqxbOvxPgShG0yt",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Poseidon's Wake — Paint Only (10-Year)",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $1,650",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=BPNpOzXou1PeXDHwrR3y",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Blackbeard's Shield — 5-Year Package",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $1,595",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=mzVA2CzdThATeK5aTtKO",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Black-Out Kit",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "Price varies by project",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Blackbeard's Shield + Polish (5-Year)",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $1,450",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=XMed44mFme1mzX2nkzgC",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Blackbeard's Shield — Paint Only (5-Year)",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $1,150",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=A1LOtQW4Mc2AfFPcqpg1",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Triton's + Polish (3-Year)",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $1,050",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=Errfwe71OK3bOPEMmVlE",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Triton's — Paint Only (3-Year)",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $749",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=SIbBBpH4haAzxfayCBJK",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "1-Year Ceramic Coating",
+      "location": "In-Shop",
+      "category": "Ceramic Coatings",
+      "price": "From $250",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=DPBW1Y6wa9HLpmpf0nFx",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Three-Stage Paint Correction",
+      "location": "In-Shop",
+      "category": "Paint Correction & Enhancement",
+      "price": "From $950",
+      "description": "Heavy-cut polishing and correction.",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=MOI44Rn5U7hMo4PWzduI",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Two-Step Paint Correction",
+      "location": "In-Shop",
+      "category": "Paint Correction & Enhancement",
+      "price": "From $550",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=dygBAAPtxGcH00ObYYnf",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Single-Stage Enhancement Polish",
+      "location": "In-Shop",
+      "category": "Paint Correction & Enhancement",
+      "price": "From $450",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare&productServiceId=AxwShng1HNpJFFjVJ0iS",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Paint & Overspray Removal",
+      "location": "In-Shop",
+      "category": "Paint Correction & Enhancement",
+      "price": "Price varies by project",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Full Front Protection — 24-Inch Partial Hood",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "From $1,295",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare&productServiceId=pBkoCqvIxpgJs4cZABnd",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Full Hood & Fenders PPF",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "From $795",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare&productServiceId=uTRqcK6dKJMFm3JGWrU0",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Windshield Protection Film",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "From $400",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare&productServiceId=ZAeJxUvLrMFQDsDc8t8g",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Lower Body PPF — Both Sides",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "From $395",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare&productServiceId=08f0ijWA0PSUES6T6mcX",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Mirror Protection — Both Mirrors",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "From $110",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare&productServiceId=4Upk9RHZVyAhOwiun4pv",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Trailer V-Nose PPF — 8-mil",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "$1,150",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Piano Black / Gloss Trim Polish Add-On",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "$75",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "PPF Installation — Specialty Coverage",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "Price varies by project",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "PPF Removal",
+      "location": "In-Shop",
+      "category": "Paint Protection Film (PPF)",
+      "price": "Price varies by project",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/6dmgpzNNb50oHb6hlkSd?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Front Two Windows Only",
+      "location": "In-Shop",
+      "category": "Window Tint, Wraps & Customization",
+      "price": "$150",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/DhlowPz68gCwwvOOclu0?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Front Two Windows + Windshield",
+      "location": "In-Shop",
+      "category": "Window Tint, Wraps & Customization",
+      "price": "$280",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/DhlowPz68gCwwvOOclu0?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "All Windows + Windshield",
+      "location": "In-Shop",
+      "category": "Window Tint, Wraps & Customization",
+      "price": "From $380",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/DhlowPz68gCwwvOOclu0?industry=vehicleCare&productServiceId=b8OXAqLsUvYGjHDgZ3Kp",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Tint Removal",
+      "location": "In-Shop",
+      "category": "Window Tint, Wraps & Customization",
+      "price": "From $50",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare&productServiceId=E69zv8EKfgUVqGS8gEDn",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Vinyl Wrap",
+      "location": "In-Shop",
+      "category": "Window Tint, Wraps & Customization",
+      "price": "Price varies by project",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Parts & Component Installation",
+      "location": "In-Shop",
+      "category": "Window Tint, Wraps & Customization",
+      "price": "Price varies by project",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Rim & Caliper Ceramic Coating",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$650",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Wheel Face Coating",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$275",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Leather Coating",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$250",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Exterior Glass Coating",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$225",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Exterior Trim Coating",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$175",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Windshield Coating",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$150",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Interior Trim Protection",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$150",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Tire Coating",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$100",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Mini Interior Detail — Coating Add-On",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$275",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/gXfg1vwW5TaIhWV62jeO?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Headlight Restoration",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "$150",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Acid Wash",
+      "location": "In-Shop",
+      "category": "Specialty Coatings & Restoration",
+      "price": "From $125",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare&productServiceId=Y848QRUsBXAQYYvMCX6F",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "10-Year Poseidon's Wake Bike Package",
+      "location": "In-Shop",
+      "category": "Motorcycle Paint Protection",
+      "price": "From $900",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/Rj6QCD4h3qHgUS6NIU8M?industry=vehicleCare&productServiceId=Ph3zOcdQEQUrVPA2QNDL",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "5-Year Blackbeard's Shield Bike Package",
+      "location": "In-Shop",
+      "category": "Motorcycle Paint Protection",
+      "price": "From $650",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/Rj6QCD4h3qHgUS6NIU8M?industry=vehicleCare&productServiceId=4N7zM5MGf0eav2Wv26Ba",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "3-Year Triton's Bike Package",
+      "location": "In-Shop",
+      "category": "Motorcycle Paint Protection",
+      "price": "From $450",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/Rj6QCD4h3qHgUS6NIU8M?industry=vehicleCare&productServiceId=nwPG7JcmYsXDJfaKFPUF",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Bike Single-Stage Enhancement Polish",
+      "location": "In-Shop",
+      "category": "Motorcycle Paint Protection",
+      "price": "From $200",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/Rj6QCD4h3qHgUS6NIU8M?industry=vehicleCare&productServiceId=A6iyWiWsQHYtNL4Ve9pa",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Marine Ceramic Coating — 14–24 ft",
+      "location": "In-Shop",
+      "category": "Marine Ceramic Consultations",
+      "price": "$30 per ft",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/83hTQ98XVc8a2mLVq9k2?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Marine Ceramic Coating — 25–50 ft",
+      "location": "In-Shop",
+      "category": "Marine Ceramic Consultations",
+      "price": "$33 per ft",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/83hTQ98XVc8a2mLVq9k2?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Marine Ceramic Coating — Sportfish",
+      "location": "In-Shop",
+      "category": "Marine Ceramic Consultations",
+      "price": "$65 per ft",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/83hTQ98XVc8a2mLVq9k2?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Beach Dawgs Express Full Detail",
+      "location": "Express Mobile",
+      "category": "Full & Maintenance Detailing",
+      "price": "From $200",
+      "description": "Light-soil inside-and-out refresh; also available in-shop.",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/IxCth5tHZmj7fE6fRzTK?industry=vehicleCare&productServiceId=CXPtw1PmoPGCi4eplrXU",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Boardwalk Full Detail",
+      "location": "Express Mobile",
+      "category": "Full & Maintenance Detailing",
+      "price": "From $325",
+      "description": "Thorough interior and exterior detailing.",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/IxCth5tHZmj7fE6fRzTK?industry=vehicleCare&productServiceId=D6rc4pFn2waYDRXhqVoY",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "The Tsunami Treatment",
+      "location": "Express Mobile",
+      "category": "Full & Maintenance Detailing",
+      "price": "From $550",
+      "description": "Premium vehicle detailing and protection.",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/IxCth5tHZmj7fE6fRzTK?industry=vehicleCare&productServiceId=nbgpMrXCqtUO6SuqCCsj",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Shoreline Maintenance Detail (Monthly)",
+      "location": "Express Mobile",
+      "category": "Full & Maintenance Detailing",
+      "price": "From $115",
+      "description": "Available for eligible previously detailed vehicles.",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/IxCth5tHZmj7fE6fRzTK?industry=vehicleCare&productServiceId=02AeQXeAnXOdgWy3eP6w",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "High Tide Basic Wash",
+      "location": "Express Mobile",
+      "category": "Exterior Express Services",
+      "price": "From $125",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/ETaMHMUUXiwCCYhSHRlB?industry=vehicleCare&productServiceId=601JudIKjjJAzhbHKnmz",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Sea Shine Supreme Wash",
+      "location": "Express Mobile",
+      "category": "Exterior Express Services",
+      "price": "From $285",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/ETaMHMUUXiwCCYhSHRlB?industry=vehicleCare&productServiceId=Ku178sICfnmLbX6FZmED",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Mini Interior Detail",
+      "location": "Express Mobile",
+      "category": "Interior Express Services",
+      "price": "$100",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/61lZIUSHPYs8hqSARkc8?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Cabin Breeze",
+      "location": "Express Mobile",
+      "category": "Interior Express Services",
+      "price": "From $200",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/61lZIUSHPYs8hqSARkc8?industry=vehicleCare&productServiceId=wgibCOnk5OUsX42WliYr",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Castaway Cabin Care",
+      "location": "Express Mobile",
+      "category": "Interior Express Services",
+      "price": "From $300",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/61lZIUSHPYs8hqSARkc8?industry=vehicleCare&productServiceId=vc5f2HW0qrSiPm9Y7jxM",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Pet Hair Removal",
+      "location": "Express Mobile",
+      "category": "Interior Add-Ons",
+      "price": "From $50",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/F4pXAZ6oa5WEtFxaIX38?industry=vehicleCare&productServiceId=a45lMTshJQknCS7cAqVK",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Personal Item / Trash Removal",
+      "location": "Express Mobile",
+      "category": "Interior Add-Ons",
+      "price": "Price varies by vehicle",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/F4pXAZ6oa5WEtFxaIX38?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Stain Removal",
+      "location": "Express Mobile",
+      "category": "Interior Add-Ons",
+      "price": "From $80",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/F4pXAZ6oa5WEtFxaIX38?industry=vehicleCare&productServiceId=StRnfSTJqpukLFjPuiGT",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Air Quality Reset",
+      "location": "Express Mobile",
+      "category": "Interior Add-Ons",
+      "price": "$100",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/F4pXAZ6oa5WEtFxaIX38?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Steam Cleaning & Sanitization",
+      "location": "Express Mobile",
+      "category": "Interior Add-Ons",
+      "price": "Price varies by vehicle",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/F4pXAZ6oa5WEtFxaIX38?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Shampoo Treatment",
+      "location": "Express Mobile",
+      "category": "Interior Add-Ons",
+      "price": "Price varies by vehicle",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/F4pXAZ6oa5WEtFxaIX38?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Hydro Seal",
+      "location": "Express Mobile",
+      "category": "Exterior Add-Ons",
+      "price": "$35",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Engine Bay Cleaning",
+      "location": "Express Mobile",
+      "category": "Exterior Add-Ons",
+      "price": "Price varies by vehicle",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Foam Sealant",
+      "location": "Express Mobile",
+      "category": "Exterior Add-Ons",
+      "price": "$65",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Clay Bar",
+      "location": "Express Mobile",
+      "category": "Exterior Add-Ons",
+      "price": "From $100",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare&productServiceId=YJqokfCi3wf4W31YrVZb",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Canvas & Fabric Protection",
+      "location": "Express Mobile",
+      "category": "Exterior Add-Ons",
+      "price": "$100",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Standard Machine-Applied Wax",
+      "location": "Express Mobile",
+      "category": "Exterior Add-Ons",
+      "price": "$125",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Machine-Applied Wax / Sealant",
+      "location": "Express Mobile",
+      "category": "Exterior Add-Ons",
+      "price": "$150",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Fleet Truck Aluminum Brightener",
+      "location": "Express Mobile",
+      "category": "Exterior Add-Ons",
+      "price": "From $160",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/CutQvBXJG03SzaITmqp7?industry=vehicleCare&productServiceId=y7w5HnQLEGS1jkSootXW",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Shoreline Bike Wash",
+      "location": "Express Mobile",
+      "category": "Motorcycle Detailing",
+      "price": "From $85",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/adOXxsgQp7tEtSvdSY31?industry=vehicleCare&productServiceId=ogthv6j4th7OgmsuQQxB",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Boardwalk Bike Detail",
+      "location": "Express Mobile",
+      "category": "Motorcycle Detailing",
+      "price": "From $175",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/adOXxsgQp7tEtSvdSY31?industry=vehicleCare&productServiceId=ensYsUCEhihb2Bez3XFZ",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "Tsunami Bike Detail",
+      "location": "Express Mobile",
+      "category": "Motorcycle Detailing",
+      "price": "From $325",
+      "description": "",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/adOXxsgQp7tEtSvdSY31?industry=vehicleCare&productServiceId=ElR76QYNiwSbXcmLmhcX",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    },
+    {
+      "name": "RV / Camper Exterior Hand Wash",
+      "location": "Express Mobile",
+      "category": "Large Vehicle & Specialty Mobile",
+      "price": "Confirm price by length",
+      "description": "Specialty exterior wash for campers and RVs. Pricing in the snapshot requires verification.",
+      "booking_url": "https://app.urable.com/virtual-shop/4JiKIDotPBi6kMyy9gSX/p706Jrn0r5UmpaZhXyBk?industry=vehicleCare",
+      "source": "Urable handoff export, 2026-10-19",
+      "verification": "Live Urable price/location confirmation pending"
+    }
+  ]
+}
