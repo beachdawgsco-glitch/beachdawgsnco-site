@@ -1,4 +1,4 @@
-/* Loads owner-editable content from /data/*.json (edited in the admin at /admin). Page HTML already holds the same content as a fallback. */
+/* Loads owner-editable content from the site database (edited in /portal/), falling back to /data/*.json, then to the content already in the page HTML. */
 (function(){
 const D={phone:'(252) 933-7311',phone2:'252-933-7311',digits:'12529337311',email:'management@beachdawgsnco.com',a1:'16881 US-17, Unit F',a2:'Hampstead, NC 28443',hours:'Mon to Sat, 7 AM to 5 PM'};
 const get=n=>fetch('data/'+n+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
@@ -25,5 +25,9 @@ function gallery(g){const box=document.querySelector('.gallery.full');if(!g||!g.
  g.items.forEach((x,i)=>{if(!x.image)return;const src=String(x.image).replace(/^\//,'');const b=document.createElement('button');b.className='photo';b.setAttribute('aria-label','Enlarge photo '+(i+1));b.dataset.image=src;
   b.innerHTML='<img src="'+esc(src)+'" alt="'+esc(x.caption||'Beach Dawgs & Co. work')+'" loading="lazy">';
   b.addEventListener('click',()=>{if(dlg){dlg.querySelector('img').src=src;dlg.showModal();}});box.prepend(b);});}
-Promise.all(['site','packages','faq','gallery'].map(get)).then(r=>{site(r[0]);packages(r[1]);faq(r[2]);gallery(r[3]);});
+const SB='https://gxjgqxqcvkfanvydbztv.supabase.co',KEY='sb_publishable_pI_tA_OhNtH4sGaZ8yor-g_b7kKJ2F3';
+const db=()=>{const c=new AbortController();const t=setTimeout(()=>c.abort(),4000);
+ return fetch(SB+'/rest/v1/beach_content?select=key,data',{headers:{apikey:KEY},signal:c.signal,cache:'no-store'}).then(r=>r.ok?r.json():[]).then(a=>{clearTimeout(t);const m={};a.forEach(x=>{if(x&&x.key&&x.data)m[x.key]=x.data;});return m;}).catch(()=>({}));};
+const names=['site','packages','faq','gallery'];
+Promise.all([db(),Promise.all(names.map(get))]).then(([m,r])=>{const v=names.map((n,i)=>m[n]||r[i]);site(v[0]);packages(v[1]);faq(v[2]);gallery(v[3]);});
 })();

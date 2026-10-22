@@ -27,7 +27,7 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
 
 <section id="app" class="hide">
  <h1>Your account</h1>
- <div class="tabs" id="apptabs"><button data-p="p-profile" class="on">Profile</button><button data-p="p-veh">Vehicles</button><button data-p="p-priv">Privacy</button><button data-p="p-sec">Security</button><button data-p="p-staff" id="tab-staff" class="hide">Owner tools</button></div>
+ <div class="tabs" id="apptabs"><button data-p="p-profile" class="on">Profile</button><button data-p="p-veh">Vehicles</button><button data-p="p-priv">Privacy</button><button data-p="p-sec">Security</button><button data-p="p-edit" id="tab-edit" class="hide">Edit site</button><button data-p="p-staff" id="tab-staff" class="hide">Owner tools</button></div>
 
  <div id="p-profile" class="card pane"><h2>Profile</h2><form id="profform">
   <label for="fn">Full name</label><input id="fn" maxlength="160" autocomplete="name">
@@ -49,12 +49,37 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
   <button id="mfa-start" class="alt">Set up two-step login</button>
   <hr style="border-color:#2a2a2a;margin:22px 0"><h2>Password</h2><form id="pwform"><label for="np">New password (at least 10 characters)</label><input id="np" type="password" minlength="10" autocomplete="new-password" required><button type="submit" class="alt">Change password</button></form></div>
 
+
+ <div id="p-edit" class="card pane hide"><h2>Edit site</h2>
+  <p class="small">Changes go live on the public site right away. Staff can manage gallery photos. Managers and the owner can edit everything.</p>
+  <h3>Gallery photos</h3>
+  <label for="gp-files">Add photos (JPEG, PNG or WebP; large photos are shrunk automatically)</label><input id="gp-files" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+  <label for="gp-cap">Caption (optional, applies to this upload)</label><input id="gp-cap" maxlength="140">
+  <button id="gp-go">Upload photos</button><div id="gp-list"></div>
+  <div id="ed-mgr" class="hide">
+   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Business info and promo banner</h3>
+   <form id="si-form">
+    <label for="si-ph">Phone (as shown)</label><input id="si-ph" maxlength="30">
+    <label for="si-em">Email</label><input id="si-em" type="email" maxlength="120">
+    <label for="si-a1">Address line 1</label><input id="si-a1" maxlength="120">
+    <label for="si-a2">Address line 2</label><input id="si-a2" maxlength="120">
+    <label for="si-hr">Hours</label><input id="si-hr" maxlength="120">
+    <label><input id="si-pe" type="checkbox" style="width:auto"> Show promo banner at the top of every page</label>
+    <label for="si-pt">Promo text</label><input id="si-pt" maxlength="160">
+    <label for="si-pl">Promo link (optional)</label><input id="si-pl" maxlength="300">
+    <button type="submit">Save business info</button></form>
+   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Package starting prices</h3>
+   <form id="pk-form"><div id="pk-list"></div><button type="submit">Save prices</button></form>
+   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>FAQs</h3>
+   <form id="fq-form"><div id="fq-list"></div><button type="button" class="alt" id="fq-add">Add a question</button><button type="submit">Save FAQs</button></form>
+  </div>
+ </div>
  <div id="p-staff" class="card pane hide"><h2>Owner tools</h2>
   <h3>Staff access</h3><div id="stafflist" class="small"></div>
   <form id="staffform"><label for="se">Person's email (they must create an account and verify it first)</label><input id="se" type="email" required>
    <label for="sr">Role</label><select id="sr"><option value="staff">Staff</option><option value="manager">Manager</option></select>
    <button type="submit">Give access</button></form>
-  <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Encrypted backup</h3><p class="small">Downloads customer profiles, vehicles and privacy requests as a file locked with a passphrase you choose. The passphrase is never sent anywhere. If you lose it, the backup cannot be opened.</p>
+  <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Encrypted backup</h3><p class="small">Downloads customer profiles, vehicles, privacy requests and site content as a file locked with a passphrase you choose. The passphrase is never sent anywhere. If you lose it, the backup cannot be opened.</p>
   <label for="bp">Backup passphrase (at least 14 characters)</label><input id="bp" type="password" minlength="14" autocomplete="new-password">
   <button id="bk-go">Download encrypted backup</button>
   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Restore from backup</h3><p class="small">Restore updates matching records from the file. It never deletes anything. You see what is in the file before anything changes.</p>
@@ -101,7 +126,7 @@ async function loadRequests(){const{data}=await sb.from('beach_privacy_requests'
 async function rq(kind){if(kind==='deletion'&&!confirm('Request deletion of your account and saved information?'))return;
  const{error}=await sb.from('beach_privacy_requests').insert({user_id:user.id,kind});say(error?E(error):'Request received. We will reply by email.',error?'err':'ok');loadRequests();}
 $('rq-export').onclick=()=>rq('export');$('rq-del').onclick=()=>rq('deletion');
-async function loadAccess(){const{data}=await sb.rpc('beach_my_access');role=data&&data.role||null;$('tab-staff').classList.toggle('hide',role!=='owner');
+async function loadAccess(){const{data}=await sb.rpc('beach_my_access');role=data&&data.role||null;$('tab-staff').classList.toggle('hide',role!=='owner');$('tab-edit').classList.toggle('hide',!role);if(role)loadEdit();
  if(role&&role!=='owner'){say('Signed in with '+role+' access.','info');}if(role==='owner')loadStaff();}
 async function loadStaff(){const{data,error}=await sb.rpc('beach_staff_directory');const l=$('stafflist');l.innerHTML='';if(error){l.textContent=E(error);return;}
  (data||[]).forEach(m=>{const r=document.createElement('div');r.className='row';const s=document.createElement('span');s.textContent=m.email+' ('+m.role+(m.active?'':', deactivated')+')';r.appendChild(s);
@@ -137,6 +162,50 @@ $('rs-prev').onclick=async()=>{restoreSnap=null;$('rs-go').classList.add('hide')
  $('rs-out').innerHTML='';const p=document.createElement('p');p.className='small';p.textContent='Backup from '+new Date(o.exportedAt).toLocaleString()+': '+(r.profiles||[]).length+' profiles, '+(r.vehicles||[]).length+' vehicles. Privacy requests in the file are kept for reference and are not restored.';$('rs-out').appendChild(p);$('rs-go').classList.remove('hide');say('');}catch(x){say(E(x),'err');}};
 $('rs-go').onclick=async()=>{if(!restoreSnap||!confirm('Restore these records now? Matching records will be overwritten with the backup values.'))return;
  const{data,error}=await sb.rpc('beach_restore_records',{snapshot:restoreSnap});if(error){say(E(error),'err');return;}say('Restored '+data.profiles+' profiles and '+data.vehicles+' vehicles.','ok');$('rs-go').classList.add('hide');restoreSnap=null;};
+
+// ---- site editor (content lives in Supabase table beach_content; public site reads it)
+const CONTENT={};
+async function loadContent(){
+ for(const k of ['site','packages','faq','gallery']){
+  const{data}=await sb.from('beach_content').select('data').eq('key',k).maybeSingle();
+  if(data&&data.data)CONTENT[k]=data.data;
+  else{try{const r=await fetch('../data/'+k+'.json',{cache:'no-cache'});CONTENT[k]=r.ok?await r.json():{};}catch(e){CONTENT[k]={};}}
+ }
+}
+async function saveContent(k,d,okmsg){const{error}=await sb.rpc('beach_save_content',{k,d});if(error){say(E(error),'err');return false;}CONTENT[k]=d;say(okmsg||'Saved. It is live on the site.','ok');return true;}
+function mk(t,props,kids){const e=document.createElement(t);Object.assign(e,props||{});(kids||[]).forEach(c=>e.append(c));return e;}
+function renderGallery(){const l=$('gp-list');l.innerHTML='';const items=(CONTENT.gallery&&CONTENT.gallery.items)||[];
+ if(!items.length)l.append(mk('p',{className:'small',textContent:'No photos added here yet.'}));
+ items.forEach((it,i)=>{const row=mk('div',{className:'row'});const img=mk('img',{src:it.image,alt:it.caption||'',loading:'lazy'});img.style.cssText='width:72px;height:54px;object-fit:cover;border-radius:8px';
+  const cap=mk('span',{className:'small',textContent:it.caption||'(no caption)'});cap.style.flex='1';
+  const b=mk('button',{className:'danger',type:'button',textContent:'Remove'});b.style.margin='0';
+  b.onclick=async()=>{if(!confirm('Remove this photo from the gallery?'))return;const n=items.filter((_,j)=>j!==i);if(await saveContent('gallery',{items:n}))renderGallery();};
+  row.append(img,cap,b);l.append(row);});}
+function shrink(file){return new Promise((res,rej)=>{const url=URL.createObjectURL(file);const im=new Image();
+ im.onload=()=>{const M=2000,sc=Math.min(1,M/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);
+  c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(url);c.toBlob(b=>b?res(b):rej(new Error('Could not process that photo.')),'image/jpeg',.85);};
+ im.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('That file could not be read as a photo.'));};im.src=url;});}
+$('gp-go').onclick=async()=>{const files=[...$('gp-files').files];if(!files.length){say('Choose at least one photo.','err');return;}if(files.length>20){say('Upload 20 photos or fewer at a time.','err');return;}
+ $('gp-go').disabled=true;const cap=$('gp-cap').value.trim();const items=((CONTENT.gallery&&CONTENT.gallery.items)||[]).slice();let n=0;
+ try{for(const f of files){const blob=await shrink(f);const path='gallery/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.jpg';
+   const{error}=await sb.storage.from('site-media').upload(path,blob,{contentType:'image/jpeg',upsert:false});if(error)throw error;
+   const{data}=sb.storage.from('site-media').getPublicUrl(path);items.push({image:data.publicUrl,caption:cap});n++;}
+  if(await saveContent('gallery',{items},n+' photo'+(n===1?'':'s')+' added. Live on the Gallery page now.')){$('gp-files').value='';$('gp-cap').value='';}
+ }catch(x){say(E(x),'err');if(n&&items.length)await saveContent('gallery',{items},n+' photo(s) added before an error stopped the rest.');}
+ renderGallery();$('gp-go').disabled=false;};
+function renderSite(){const s=CONTENT.site||{};$('si-ph').value=s.phone_display||'';$('si-em').value=s.email||'';$('si-a1').value=s.address_line1||'';$('si-a2').value=s.address_line2||'';$('si-hr').value=s.hours||'';$('si-pe').checked=!!s.promo_enabled;$('si-pt').value=s.promo_text||'';$('si-pl').value=s.promo_link||'';}
+$('si-form').onsubmit=async e=>{e.preventDefault();const ph=$('si-ph').value.trim();const dig=ph.replace(/\D/g,'');
+ await saveContent('site',Object.assign({},CONTENT.site,{phone_display:ph,phone_digits:dig.length===10?'1'+dig:dig,email:$('si-em').value.trim(),address_line1:$('si-a1').value.trim(),address_line2:$('si-a2').value.trim(),hours:$('si-hr').value.trim(),promo_enabled:$('si-pe').checked,promo_text:$('si-pt').value.trim(),promo_link:$('si-pl').value.trim()}));};
+function renderPackages(){const l=$('pk-list');l.innerHTML='';((CONTENT.packages&&CONTENT.packages.items)||[]).forEach(it=>{
+ const i=mk('input',{value:it.price||'',maxlength:40});i.dataset.name=it.name;l.append(mk('label',{textContent:it.name}),i);});}
+$('pk-form').onsubmit=async e=>{e.preventDefault();const items=[...$('pk-list').querySelectorAll('input')].map(i=>({name:i.dataset.name,price:i.value.trim()}));await saveContent('packages',{items});};
+function fqRow(q,a){const d=mk('div',{className:'faqrow'});d.style.cssText='border-top:1px solid #2a2a2a;padding-top:8px;margin-top:8px';
+ const qi=mk('input',{value:q||'',maxlength:200,placeholder:'Question'});const ai=mk('textarea',{value:a||'',maxlength:2000,placeholder:'Answer',rows:3});ai.style.cssText='width:100%;padding:12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#f2f2f2;font:inherit;margin-top:6px';
+ const rm=mk('button',{type:'button',className:'alt',textContent:'Remove'});rm.onclick=()=>d.remove();d.append(qi,ai,rm);return d;}
+function renderFaq(){const l=$('fq-list');l.innerHTML='';((CONTENT.faq&&CONTENT.faq.items)||[]).forEach(x=>l.append(fqRow(x.question,x.answer)));}
+$('fq-add').onclick=()=>$('fq-list').append(fqRow('',''));
+$('fq-form').onsubmit=async e=>{e.preventDefault();const items=[...$('fq-list').querySelectorAll('.faqrow')].map(d=>({question:d.querySelector('input').value.trim(),answer:d.querySelector('textarea').value.trim()})).filter(x=>x.question&&x.answer);await saveContent('faq',{items});};
+async function loadEdit(){await loadContent();renderGallery();const mgr=role==='owner'||role==='manager';$('ed-mgr').classList.toggle('hide',!mgr);if(mgr){renderSite();renderPackages();renderFaq();}}
 sb.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>boot(session),0);if(ev==='PASSWORD_RECOVERY')say('Enter a new password under Security.','info');});
 sb.auth.getSession().then(({data})=>boot(data.session));
 </script></body></html>
