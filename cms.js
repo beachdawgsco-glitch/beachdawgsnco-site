@@ -21,9 +21,23 @@ function packages(p){if(!p||!p.items)return;p.items.forEach(it=>{document.queryS
  let e=h.nextElementSibling,i=0;while(e&&i<4){if(/^Starting at/.test(e.textContent.trim())&&e.children.length===0){e.textContent=it.price;break;}e=e.nextElementSibling;i++;}});});}
 function faq(f){const box=document.querySelector('#faq > div:nth-child(2)');if(!f||!f.items||!f.items.length||!box)return;
  box.innerHTML=f.items.map(x=>'<details><summary>'+esc(x.question)+'<span>+</span></summary><p>'+md(x.answer||'')+'</p></details>').join('');}
-function gallery(g){const box=document.querySelector('.gallery.full');if(!g||!g.items||!box)return;const dlg=document.querySelector('#lightbox');
- g.items.forEach((x,i)=>{if(!x.image)return;const src=String(x.image).replace(/^\//,'');const b=document.createElement('button');b.className='photo';b.setAttribute('aria-label','Enlarge photo '+(i+1));b.dataset.image=src;
-  b.innerHTML='<img src="'+esc(src)+'" alt="'+esc(x.caption||'Beach Dawgs & Co. work')+'" loading="lazy">';
-  b.addEventListener('click',()=>{if(dlg){dlg.querySelector('img').src=src;dlg.showModal();}});box.prepend(b);});}
+function gallery(g){
+ const box=document.querySelector('.gallery.full');
+ if(!box||!g||!Array.isArray(g.items)||!g.items.length)return;
+ const valid=g.items.filter(x=>x&&typeof x.image==='string'&&/^\/?assets\/[\w.\-/]+\.(?:jpe?g|png|webp|gif|avif)$/i.test(x.image)&&!x.image.includes('..'));
+ if(!valid.length)return; // Preserve original static portfolio as a fallback.
+ const dlg=document.querySelector('#lightbox');
+ const frag=document.createDocumentFragment();
+ valid.forEach((x,i)=>{
+  const src=x.image.replace(/^\//,'');
+  const b=document.createElement('button');
+  b.className='photo';b.type='button';b.setAttribute('aria-label','Enlarge photo '+(i+1));b.dataset.image=src;
+  const img=document.createElement('img');img.src=src;img.alt=String(x.caption||'Beach Dawgs & Co. work');img.loading='lazy';
+  b.appendChild(img);
+  b.addEventListener('click',()=>{if(dlg){const big=dlg.querySelector('img');if(big){big.src=src;big.alt=img.alt;}dlg.showModal();}});
+  frag.appendChild(b);
+ });
+ box.replaceChildren(frag); // CMS is the source of truth; do not duplicate hard-coded photos.
+}
 Promise.all(['site','packages','faq','gallery'].map(get)).then(r=>{site(r[0]);packages(r[1]);faq(r[2]);gallery(r[3]);});
 })();
