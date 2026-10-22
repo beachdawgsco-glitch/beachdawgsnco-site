@@ -21,10 +21,17 @@ function packages(p){if(!p||!p.items)return;p.items.forEach(it=>{document.queryS
  let e=h.nextElementSibling,i=0;while(e&&i<4){if(/^Starting at/.test(e.textContent.trim())&&e.children.length===0){e.textContent=it.price;break;}e=e.nextElementSibling;i++;}});});}
 function faq(f){const box=document.querySelector('#faq > div:nth-child(2)');if(!f||!f.items||!f.items.length||!box)return;
  box.innerHTML=f.items.map(x=>'<details><summary>'+esc(x.question)+'<span>+</span></summary><p>'+md(x.answer||'')+'</p></details>').join('');}
-function gallery(g){const box=document.querySelector('.gallery.full');if(!g||!g.items||!box)return;const dlg=document.querySelector('#lightbox');
- g.items.forEach((x,i)=>{if(!x.image)return;const src=String(x.image).replace(/^\//,'');const b=document.createElement('button');b.className='photo';b.setAttribute('aria-label','Enlarge photo '+(i+1));b.dataset.image=src;
-  b.innerHTML='<img src="'+esc(src)+'" alt="'+esc(x.caption||'Beach Dawgs & Co. work')+'" loading="lazy">';
-  b.addEventListener('click',()=>{if(dlg){dlg.querySelector('img').src=src;dlg.showModal();}});box.prepend(b);});}
+function gallery(g){if(!g||!g.items)return;
+ const f=location.pathname.split('/').pop().replace(/\.html$/,'')||'index';
+ const slug={'index':'home','full-auto-detailing-services':'full-detailing','exterior-detailing-services':'exterior','ceramic-coating-service':'ceramic','customs':'customs','gallery':'gallery'}[f];if(!slug)return;
+ const mine=g.items.filter(x=>x&&x.image&&(x.page||'gallery')===slug);if(!mine.length)return;
+ const open=(src,alt)=>{let d=document.getElementById('cms-lb');if(!d){d=document.createElement('div');d.id='cms-lb';d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:200;padding:16px;cursor:zoom-out';d.innerHTML='<img style="max-width:100%;max-height:100%;border-radius:10px" alt="">';d.onclick=()=>{d.style.display='none';};document.body.appendChild(d);}d.firstChild.src=src;d.firstChild.alt=alt;d.style.display='flex';};
+ const tile=(x,i)=>{const src=String(x.image).replace(/^\//,'');const b=document.createElement('button');b.className='photo';b.type='button';b.setAttribute('aria-label','Enlarge photo '+(i+1));
+  b.innerHTML='<img src="'+esc(src)+'" alt="'+esc(x.caption||'Beach Dawgs & Co. work')+'" loading="lazy">';b.addEventListener('click',()=>open(src,x.caption||''));return b;};
+ if(slug==='gallery'){const box=document.querySelector('.gallery.full');if(!box)return;const dlg=document.querySelector('#lightbox');[...mine].reverse().forEach((x,i)=>{const src=String(x.image).replace(/^\//,'');const b=document.createElement('button');b.className='photo';b.type='button';b.dataset.image=src;b.setAttribute('aria-label','Enlarge photo '+(i+1));b.innerHTML='<img src="'+esc(src)+'" alt="'+esc(x.caption||'Beach Dawgs & Co. work')+'" loading="lazy">';b.addEventListener('click',()=>{if(dlg&&dlg.showModal){dlg.querySelector('img').src=src;dlg.showModal();}else open(src,x.caption||'');});box.prepend(b);});return;}
+ const sec=document.createElement('section');sec.className='section cms-photos';sec.innerHTML='<div style="max-width:1200px;margin:0 auto;padding:0 20px"><span class="eyebrow">OUR WORK</span><h2>RECENT WORK</h2><div class="cms-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:16px"></div></div>';
+ const grid=sec.querySelector('.cms-grid');mine.forEach((x,i)=>{const b=tile(x,i);b.style.cssText='padding:0;border:0;background:none;cursor:zoom-in;border-radius:12px;overflow:hidden;aspect-ratio:4/3';b.firstChild.style.cssText='width:100%;height:100%;object-fit:cover;display:block';grid.append(b);});
+ const ft=document.querySelector('footer');if(ft)ft.before(sec);else document.body.append(sec);}
 const SB='https://gxjgqxqcvkfanvydbztv.supabase.co',KEY='sb_publishable_pI_tA_OhNtH4sGaZ8yor-g_b7kKJ2F3';
 const db=()=>{const c=new AbortController();const t=setTimeout(()=>c.abort(),4000);
  return fetch(SB+'/rest/v1/beach_content?select=key,data',{headers:{apikey:KEY},signal:c.signal,cache:'no-store'}).then(r=>r.ok?r.json():[]).then(a=>{clearTimeout(t);const m={};a.forEach(x=>{if(x&&x.key&&x.data)m[x.key]=x.data;});return m;}).catch(()=>({}));};
