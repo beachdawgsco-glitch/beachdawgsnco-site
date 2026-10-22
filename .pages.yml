@@ -2,6 +2,31 @@ media:
   input: assets/gallery
   output: /assets/gallery
 content:
+  - name: service_catalog
+    label: Website service list (review prices in Urable before publishing)
+    type: file
+    path: data/service-catalog.json
+    fields:
+      - {name: snapshot_date, label: Source date, type: string}
+      - {name: live_verified, label: Live Urable catalog verified, type: boolean}
+      - {name: pricing_note, label: Pricing note, type: text}
+      - name: items
+        label: Services
+        type: object
+        list: true
+        fields:
+          - {name: name, label: Service name, type: string}
+          - name: location
+            label: Service location
+            type: select
+            options:
+              values: [In-Shop, Express Mobile]
+          - {name: category, label: Group heading, type: string}
+          - {name: price, label: Website price text, type: string}
+          - {name: description, label: Short description, type: text}
+          - {name: booking_url, label: Urable booking URL, type: string}
+          - {name: source, label: Pricing source, type: string}
+          - {name: verification, label: Verification status, type: string}
   - name: gallery
     label: Gallery photos (new photos appear at the top)
     type: file
