@@ -24,7 +24,7 @@ function faq(f){const box=document.querySelector('#faq > div:nth-child(2)');if(!
 function gallery(g){
  const box=document.querySelector('.gallery.full');
  if(!box||!g||!Array.isArray(g.items)||!g.items.length)return;
- const valid=g.items.filter(x=>x&&typeof x.image==='string'&&/^\/?assets\/[\w.\-/]+\.(?:jpe?g|png|webp|gif|avif)$/i.test(x.image)&&!x.image.includes('..'));
+ const valid=g.items.filter(x=>x&&typeof x.image==='string'&&/^\/?assets\/[\w.~/\-]+\.(?:jpe?g|png|webp|gif|avif)$/i.test(x.image)&&!x.image.includes('..'));
  if(!valid.length)return; // Preserve original static portfolio as a fallback.
  const dlg=document.querySelector('#lightbox');
  const cats=['All','Vehicle Showcase','Interior','Wheels & Tires','Detailing in Action','Paint Polishing','Motorcycles','Behind the Scenes'];
