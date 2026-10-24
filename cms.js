@@ -9,10 +9,10 @@ function clean(html){const t=document.createElement('template');t.innerHTML=Stri
 const hideEl=k=>{const m=/^(\w+)(?:#([\w-]+)|:(\d+))$/.exec(k);if(!m)return null;return m[2]?document.getElementById(m[2]):document.querySelectorAll(m[1].toLowerCase())[+m[3]]||null;};
 const IMGS=new Map(),LINKS=new Map();document.querySelectorAll('img').forEach(i=>IMGS.set(i,i.getAttribute('src')));document.querySelectorAll('a[href]').forEach(a=>LINKS.set(a,a.getAttribute('href')));
 window.__bd={IMGS,LINKS,IDX,norm,PAGE,clean,hideKey:e=>{const s=e.closest('section,footer,header');if(!s)return '';const t=s.tagName;return s.id?t+'#'+s.id:t+':'+[...document.querySelectorAll(t.toLowerCase())].indexOf(s);}};
-const D={phone:'(252) 933-7311',phone2:'252-933-7311',digits:'12529337311',email:'management@beachdawgsnco.com',a1:'16881 US-17, Unit F',a2:'Hampstead, NC 28443',hours:'Mon to Sat, 7 AM to 5 PM'};
+const D={phone:'(252) 933-7311',phone2:'252-933-7311',digits:'12529337311',email:'management@beachdawgsnco.com',a1:'16881 US-17, Unit F',a2:'Hampstead, NC 28443',hours:'Mon to Sat, 9 AM to 5 PM'};
 const get=n=>fetch('data/'+n+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const safeUrl=u=>/^(https?:|mailto:|tel:|sms:|\/(?!\/)|#|[\w][\w.\/-]*(#[\w-]*)?(\?[\w=&%.-]*)?$)/.test(String(u||'').trim())?String(u).trim():'#';
+const safeUrl=u=>{const value=String(u||'').trim();if(!value||/[\u0000-\u0020\\]/.test(value)||value.startsWith('//'))return '#';if(/^(https?:|mailto:|tel:|sms:)/i.test(value))return value;if(value.startsWith('#')||value.startsWith('/'))return value;if(/^[\w][\w.\/-]*(#[\w-]*)?(\?[\w=&%.-]*)?$/.test(value))return value;return '#';};
 const md=s=>esc(s).replace(/\[([^\]]+)\]\(([^)]+)\)/g,(m,t,u)=>'<a href="'+esc(safeUrl(u.replace(/&amp;/g,'&')))+'">'+t+' ↗</a>');
 function swapText(map){const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const n=[];while(w.nextNode())n.push(w.currentNode);
  n.forEach(x=>{if(x.parentNode.closest('script,style'))return;let v=x.nodeValue,o=v;for(const[k,r]of map)if(k&&r&&k!==r)v=v.split(k).join(r);if(v!==o)x.nodeValue=v;});}
