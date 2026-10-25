@@ -11,7 +11,7 @@ button{background:var(--o);color:#111;border:0;border-radius:99px;padding:12px 2
 .msg{margin:12px 0;padding:10px 14px;border-radius:10px;font-size:14px}.msg.ok{background:#12301c;color:#9be7b0}.msg.err{background:#351616;color:#ffb3b3}.msg.info{background:#1d2530;color:#b9d4ff}
 .row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:center}.row:first-child{border-top:0}.small{font-size:13px;color:var(--mut)}.hide{display:none}
 a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200px;height:200px}code{background:#222;padding:2px 6px;border-radius:6px;word-break:break-all}
-</style></head><body>
+</style><link rel="stylesheet" href="../photo-editor.css"><link rel="stylesheet" href="dashboard.css"></head><body>
 <header><a href="../">BEACH DAWGS <b>&amp; CO.</b></a><span id="who" class="small"></span></header>
 <main>
 <div id="msg" class="msg hide" role="status"></div>
@@ -26,8 +26,12 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
 </section>
 
 <section id="app" class="hide">
- <h1>Your account</h1>
- <div class="tabs" id="apptabs"><button data-p="p-profile" class="on">Profile</button><button data-p="p-veh">Vehicles</button><button data-p="p-priv">Privacy</button><button data-p="p-sec">Security</button><button data-p="p-lib" id="tab-lib" class="hide">Media library</button><button data-p="p-edit" id="tab-edit" class="hide">Edit site</button><button data-p="p-staff" id="tab-staff" class="hide">Owner tools</button></div>
+ <aside id="dashboard-sidebar" class="hide"><div class="dashboard-brand"><span>BEACH DAWGS &amp; CO.</span><strong>Website dashboard</strong></div><button type="button" id="dashboard-menu" class="alt" aria-expanded="false" aria-controls="dashboard-nav">Menu</button><nav id="dashboard-nav" aria-label="Dashboard navigation"></nav><div class="dashboard-links"><a href="../" target="_blank" rel="noopener">View website ↗</a><a href="https://app.urable.com/" target="_blank" rel="noopener">Open Urable ↗</a></div><p id="dashboard-role" class="small"></p></aside>
+ <div id="dashboard-content">
+ <div id="dashboard-heading"><span id="dashboard-eyebrow" class="small">YOUR ACCOUNT</span><h1 id="dashboard-title" tabindex="-1">Your account</h1><p id="dashboard-description" class="small"></p></div>
+ <div id="dashboard-status" class="hide" role="status"></div>
+ <div class="tabs" id="apptabs"><button data-p="p-profile" class="on">Profile</button><button data-p="p-veh">Vehicles</button><button data-p="p-priv">Privacy</button><button data-p="p-sec">Security</button></div>
+ <div id="p-overview" class="pane hide"><div class="dashboard-intro"><div><span class="dashboard-kicker">YOUR WEBSITE, AT A GLANCE</span><h2>A place for every update.</h2><p>Choose what you want to work on. Your photos, content, and website settings are organized below.</p></div><a class="dashboard-public" href="../" target="_blank" rel="noopener">Preview website ↗</a></div><div id="dashboard-stats" class="dashboard-stats"></div><div id="dashboard-cards" class="dashboard-cards"></div><div class="dashboard-urable"><div><h2>Your business runs in Urable.</h2><p>Manage customers, jobs, appointments, and service pricing there. Use this dashboard to keep the website up to date.</p></div><a href="https://app.urable.com/" target="_blank" rel="noopener">Open Urable ↗</a></div></div>
 
  <div id="p-profile" class="card pane"><h2>Profile</h2><form id="profform">
   <label for="fn">Full name</label><input id="fn" maxlength="160" autocomplete="name">
@@ -62,8 +66,8 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
   <label for="lib-search">Search by name</label><input id="lib-search" maxlength="60">
   <div id="lib-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:12px"></div>
  </div>
- <div id="p-edit" class="card pane hide"><h2>Edit site</h2>
-  <p class="small">Changes go live on the public site right away. Staff can manage gallery photos. Managers and the owner can edit everything.</p>
+ <div id="p-edit" class="card pane hide"><h2>Gallery &amp; page photos</h2>
+  <p class="small">Organize photos by page. Uploads and removals publish immediately. Save caption and order changes when you are ready.</p>
   <h3>Photos by page</h3>
   <p class="small">Pick a page, then add, reorder, caption, move or remove its photos. On the Gallery page they fill the main gallery. On every other page they show in a "Recent work" strip near the bottom.</p>
   <div class="tabs" id="gp-pages"></div>
@@ -74,19 +78,25 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
   <label for="gp-files" id="gp-flabel">Add photos to this page (JPEG, PNG or WebP; large photos are shrunk automatically)</label><input id="gp-files" type="file" accept="image/jpeg,image/png,image/webp" multiple>
   <label for="gp-cap">Caption for this upload (optional)</label><input id="gp-cap" maxlength="140">
   <button id="gp-go" type="button">Upload to this page</button><button id="gp-drive" type="button" class="alt">Choose from Google Drive</button>
-  <div id="ed-mgr" class="hide">
-   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Homepage layout</h3>
+ </div>
+ <div id="ed-mgr" class="hide">
+  <div id="p-home" class="card pane hide">
+   <h2 id="homepage-editor">Homepage photos &amp; sliders</h2>
    <p class="small">Change the photos and wording on the home page. Pick a section, make your changes, then click Save homepage. "Reset to original" puts the home page back the way it was built.</p>
    <div class="tabs" id="hm-tabs"></div><div id="hm-body"></div>
-   <button id="hm-save" type="button">Save homepage</button><button id="hm-reset" type="button" class="alt">Reset to original</button><a href="../" target="_blank" rel="noopener" class="small">View home page</a>
-   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Edit any page visually</h3>
+   <div class="dashboard-actions"><button id="hm-save" type="button">Save homepage</button><button id="hm-discard" type="button" class="alt">Discard changes</button><button id="hm-reset" type="button" class="alt">Reset to original</button><a href="../" target="_blank" rel="noopener" class="small">View home page ↗</a></div>
+  </div>
+  <div id="p-visual" class="card pane hide"><h2>Visual page editor</h2>
    <p class="small">Opens the real page. Tap any text, photo or link to change it, hide a section, then save. Works on every page. You must be signed in here with your two-step code first.</p>
    <div id="pg-links"></div>
-   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Colors, header and footer</h3>
+  </div>
+  <div id="p-appearance" class="card pane hide"><h2>Website appearance</h2>
    <p class="small">Site-wide. Changes the accent color and background colors, the menu links at the top, the Book button, and the footer links and wording on every page.</p>
    <div id="ch-body"></div>
-   <button id="ch-save" type="button">Save colors, header and footer</button><button id="ch-reset" type="button" class="alt">Reset to original</button>
-   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Business info and promo banner</h3>
+   <div class="dashboard-actions"><button id="ch-save" type="button">Save colors, header and footer</button><button id="ch-discard" type="button" class="alt">Discard changes</button><button id="ch-reset" type="button" class="alt">Reset to original</button></div>
+  </div>
+  <div id="p-business" class="card pane hide"><h2>Business information</h2>
+   <p class="small">Keep your contact information, opening hours, and promotion banner current.</p>
    <form id="si-form">
     <label for="si-ph">Phone (as shown)</label><input id="si-ph" maxlength="30">
     <label for="si-em">Email</label><input id="si-em" type="email" maxlength="120">
@@ -96,32 +106,34 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
     <label><input id="si-pe" type="checkbox" style="width:auto"> Show promo banner at the top of every page</label>
     <label for="si-pt">Promo text</label><input id="si-pt" maxlength="160">
     <label for="si-pl">Promo link (optional)</label><input id="si-pl" maxlength="300">
-    <button type="submit">Save business info</button></form>
-   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Package starting prices</h3>
-   <form id="pk-form"><div id="pk-list"></div><button type="submit">Save prices</button></form>
-   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>FAQs</h3>
-   <form id="fq-form"><div id="fq-list"></div><button type="button" class="alt" id="fq-add">Add a question</button><button type="submit">Save FAQs</button></form>
+    <div class="dashboard-actions"><button type="submit">Save business info</button><button type="button" class="alt" data-discard="si-form">Discard changes</button></div></form>
+  </div>
+  <div id="p-prices" class="card pane hide"><h2>Website starting prices</h2><p class="small">These are the prices displayed on the website. Confirm every amount against Urable before saving. Updating this screen does not change your Urable services.</p><a href="https://app.urable.com/products-services" target="_blank" rel="noopener">Check pricing in Urable ↗</a>
+   <form id="pk-form"><div id="pk-list"></div><div class="dashboard-actions"><button type="submit">Save prices</button><button type="button" class="alt" data-discard="pk-form">Discard changes</button></div></form>
+  </div>
+  <div id="p-faq" class="card pane hide"><h2>Frequently asked questions</h2><p class="small">Help customers understand your services and how to book.</p>
+   <form id="fq-form"><div id="fq-list"></div><div class="dashboard-actions"><button type="button" class="alt" id="fq-add">Add a question</button><button type="submit">Save FAQs</button><button type="button" class="alt" data-discard="fq-form">Discard changes</button></div></form>
   </div>
  </div>
- <div id="p-staff" class="card pane hide"><h2>Owner tools</h2>
-  <h3>Staff access</h3><div id="stafflist" class="small"></div>
+ <div id="p-staff" class="card pane hide"><h2>Team access</h2><p class="small">Managers can edit website content. Staff can manage gallery photos. Each person signs in with their own account and two-step code.</p><div id="stafflist" class="small"></div>
   <form id="staffform"><label for="se">Person's email (they must create an account and verify it first)</label><input id="se" type="email" required>
    <label for="sr">Role</label><select id="sr"><option value="staff">Staff</option><option value="manager">Manager</option></select>
-   <button type="submit">Give access</button></form>
-  <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Encrypted backup</h3><p class="small">Downloads customer profiles, vehicles, privacy requests and site content as a file locked with a passphrase you choose. The passphrase is never sent anywhere. If you lose it, the backup cannot be opened.</p>
+   <button type="submit">Give access</button></form></div>
+ <div id="p-backups" class="card pane hide"><h2>Backups &amp; recovery</h2><p class="small">Export the portal records and website content in an encrypted file. This does not include uploaded photo files, website source code, or Urable records.</p>
+  <h3>Encrypted backup</h3><p class="small">Downloads customer profiles, vehicles, privacy requests and site content as a file locked with a passphrase you choose. The passphrase is never sent anywhere. If you lose it, the backup cannot be opened.</p>
   <label for="bp">Backup passphrase (at least 14 characters)</label><input id="bp" type="password" minlength="14" autocomplete="new-password">
   <button id="bk-go">Download encrypted backup</button>
   <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Restore from backup</h3><p class="small">Restore updates matching records from the file. It never deletes anything. You see what is in the file before anything changes.</p>
   <label for="rf">Backup file</label><input id="rf" type="file" accept=".json,.bdbak"><label for="rp">Backup passphrase</label><input id="rp" type="password" autocomplete="off">
   <button id="rs-prev" class="alt">Preview backup</button><div id="rs-out"></div><button id="rs-go" class="danger hide">Restore these records</button></div>
-</section>
+</div></section>
 </main>
-<script src="../drive.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../photo-frame.js"></script><script src="photo-editor.js"></script><script src="dashboard.js"></script><script src="../drive.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 const SB_URL='https://gxjgqxqcvkfanvydbztv.supabase.co',SB_KEY='sb_publishable_pI_tA_OhNtH4sGaZ8yor-g_b7kKJ2F3';
 const sb=supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-const $=id=>document.getElementById(id);let mode='in',user=null,role=null,restoreSnap=null;
-function say(t,k){const m=$('msg');m.textContent=t;m.className='msg '+(k||'info');if(!t)m.className='msg hide';}
+const $=id=>document.getElementById(id);let mode='in',user=null,role=null,restoreSnap=null,accessRequest=0,accessKnown=false;
+function say(t,k){const m=$('msg');if($('app').classList.contains('hide'))$('auth').prepend(m);else $('dashboard-content').insertBefore(m,$('dashboard-status'));m.textContent=t;m.className='msg '+(k||'info');if(!t)m.className='msg hide';}
 const E=e=>(e&&e.message)?e.message:'Something went wrong. Please try again.';
 const PAGE=location.origin+location.pathname;
 $('t-in').onclick=()=>setMode('in');$('t-up').onclick=()=>setMode('up');
@@ -133,13 +145,14 @@ $('forgot').onclick=async()=>{const email=$('em').value.trim();if(!email){say('E
  const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:PAGE});say(error?E(error):'If that email has an account, a reset link is on its way.',error?'err':'ok');};
 $('pwform').onsubmit=async e=>{e.preventDefault();const{error}=await sb.auth.updateUser({password:$('np').value});say(error?E(error):'Password changed.',error?'err':'ok');if(!error)$('np').value='';};
 async function signOut(){await sb.auth.signOut();}
-$('apptabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#apptabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('hide',p.id!==b.dataset.p));say('');};
-function show(id){document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('hide',p.id!==id));}
 async function boot(session){
+ const sameAccount=!!user&&user.id===session?.user?.id;
+ if(!sameAccount){++accessRequest;role=null;accessKnown=false;BDAdmin.loading();if(user)BDAdmin.setAccess(null);}
  user=session&&session.user;
  $('auth').classList.toggle('hide',!!user);$('app').classList.toggle('hide',!user);
- $('who').innerHTML='';if(!user)return;
+ $('who').innerHTML='';if(!user){BDAdmin.setAccess(null);return;}
  const out=document.createElement('a');out.href='#';out.textContent='Sign out ('+user.email+')';out.onclick=e=>{e.preventDefault();signOut();};$('who').appendChild(out);
+ if(sameAccount){await Promise.all([loadAccess(),loadMfa()]);return;}
  await Promise.all([loadProfile(),loadVehicles(),loadRequests(),loadAccess(),loadMfa()]);}
 async function loadProfile(){const{data}=await sb.from('beach_profiles').select('*').eq('user_id',user.id).maybeSingle();
  $('fn').value=data?data.full_name:'';$('ph').value=data?data.phone:'';$('cp').value=data?data.communication_preference:'email';}
@@ -155,7 +168,9 @@ async function loadRequests(){const{data}=await sb.from('beach_privacy_requests'
 async function rq(kind){if(kind==='deletion'&&!confirm('Request deletion of your account and saved information?'))return;
  const{error}=await sb.from('beach_privacy_requests').insert({user_id:user.id,kind});say(error?E(error):'Request received. We will reply by email.',error?'err':'ok');loadRequests();}
 $('rq-export').onclick=()=>rq('export');$('rq-del').onclick=()=>rq('deletion');
-async function loadAccess(){const{data}=await sb.rpc('beach_my_access');role=data&&data.role||null;$('tab-staff').classList.toggle('hide',role!=='owner');$('tab-edit').classList.toggle('hide',!role);$('tab-lib').classList.toggle('hide',!role);if(role)loadEdit();
+async function loadAccess(){const request=++accessRequest;const{data,error}=await sb.rpc('beach_my_access');if(request!==accessRequest||!user)return;
+ const nextRole=error?null:data&&data.role||null;if(accessKnown&&nextRole===role)return;accessKnown=true;
+ role=nextRole;BDAdmin.setAccess(role);if(role)await loadEdit();
  if(role&&role!=='owner'){say('Signed in with '+role+' access.','info');}if(role==='owner')loadStaff();}
 async function loadStaff(){const{data,error}=await sb.rpc('beach_staff_directory');const l=$('stafflist');l.innerHTML='';if(error){l.textContent=E(error);return;}
  (data||[]).forEach(m=>{const r=document.createElement('div');r.className='row';const s=document.createElement('span');s.textContent=m.email+' ('+m.role+(m.active?'':', deactivated')+')';r.appendChild(s);
@@ -196,24 +211,25 @@ $('rs-go').onclick=async()=>{if(!restoreSnap||!confirm('Restore these records no
 const CONTENT={};
 async function loadContent(){
  for(const k of ['site','packages','faq','gallery']){
-  const{data}=await sb.from('beach_content').select('data').eq('key',k).maybeSingle();
+  const{data,error}=await sb.from('beach_content').select('data').eq('key',k).maybeSingle();if(error)throw error;
   if(data&&data.data)CONTENT[k]=data.data;
-  else{try{const r=await fetch('../data/'+k+'.json',{cache:'no-cache'});CONTENT[k]=r.ok?await r.json():{};}catch(e){CONTENT[k]={};}}
+  else{const r=await fetch('../data/'+k+'.json',{cache:'no-cache'});if(!r.ok)throw new Error('Could not load '+k+' content. Please retry.');CONTENT[k]=await r.json();}
  }
 }
-async function saveContent(k,d,okmsg){const{error}=await sb.rpc('beach_save_content',{k,d});if(error){say(E(error),'err');return false;}CONTENT[k]=d;say(okmsg||'Saved. It is live on the site.','ok');return true;}
+async function saveContent(k,d,okmsg){try{const{error}=await sb.rpc('beach_save_content',{k,d});if(error)throw error;CONTENT[k]=d;say(okmsg||'Saved. It is live on the site.','ok');BDAdmin.refresh();return true;}catch(error){say(E(error),'err');return false;}}
 
 
-async function saveGallery(patch,msg){const{data}=await sb.from('beach_content').select('data').eq('key','gallery').maybeSingle();const cur=(data&&data.data)||CONTENT.gallery||{};
+async function saveGallery(patch,msg){const{data,error}=await sb.from('beach_content').select('data').eq('key','gallery').maybeSingle();if(error){say('Could not read the latest gallery. Please retry before saving.','err');return false;}const cur=(data&&data.data)||CONTENT.gallery||{};
  return saveContent('gallery',Object.assign({},cur,patch),msg);}
-async function saveSite(patch,msg){const{data}=await sb.from('beach_content').select('data').eq('key','site').maybeSingle();const cur=(data&&data.data)||CONTENT.site||{};
+async function saveSite(patch,msg){const{data,error}=await sb.from('beach_content').select('data').eq('key','site').maybeSingle();if(error){say('Could not read the latest website settings. Please retry before saving.','err');return false;}const cur=(data&&data.data)||CONTENT.site||{};
  return saveContent('site',Object.assign({},cur,patch),msg);}
 function mk(t,props,kids){const e=document.createElement(t);Object.assign(e,props||{});(kids||[]).forEach(c=>e.append(c));return e;}
 const PAGES=[['home','Home','index.html'],['full-detailing','Full Detailing','full-auto-detailing-services.html'],['exterior','Exterior','exterior-detailing-services.html'],['ceramic','Ceramic Coating','ceramic-coating-service.html'],['customs','Customs & Protection','customs.html'],['gallery','Gallery','gallery.html']];
 let GP=[],gpPage='gallery',gpDirty=false;
 function gpLoad(){GP=((CONTENT.gallery&&CONTENT.gallery.items)||[]).map(x=>({image:x.image,caption:x.caption||'',page:PAGES.some(p=>p[0]===x.page)?x.page:'gallery'}));gpDirty=false;}
-const gpSave=async msg=>{const ok=await saveGallery({items:GP.map(x=>({image:x.image,caption:x.caption,page:x.page}))},msg);if(ok){gpDirty=false;$('gp-save').classList.add('hide');}return ok;};
-const gpMark=()=>{gpDirty=true;$('gp-save').classList.remove('hide');};
+const gpItems=()=>GP.map(x=>({image:x.image,caption:x.caption,page:x.page}));
+const gpSave=async msg=>{const items=gpItems(),snapshot=JSON.stringify(items);gpMark();const ok=await saveGallery({items},msg);if(ok){gpDirty=JSON.stringify(gpItems())!==snapshot;$('gp-save').classList.toggle('hide',!gpDirty);BDAdmin.refresh();}return ok;};
+const gpMark=()=>{gpDirty=true;$('gp-save').classList.remove('hide');BDAdmin.refresh();};
 function renderGallery(){
  const tabs=$('gp-pages');tabs.innerHTML='';
  PAGES.forEach(([k,label])=>{const n=GP.filter(x=>x.page===k).length;const b=mk('button',{type:'button',textContent:label+' ('+n+')'});if(k===gpPage)b.className='on';b.onclick=()=>{gpPage=k;renderGallery();};tabs.append(b);});
@@ -235,7 +251,7 @@ function renderGallery(){
   const swap=o=>{const t=GP[gi];GP[gi]=GP[idx[pos+o]];GP[idx[pos+o]]=t;gpMark();renderGallery();};
   up.onclick=()=>swap(-1);dn.onclick=()=>swap(1);
   const rm=mk('button',{type:'button',className:'danger',textContent:'Remove'});rm.style.margin='0';
-  rm.onclick=async()=>{if(!confirm('Remove this photo from the '+pg[1]+' page?'))return;GP.splice(gi,1);if(await gpSave('Photo removed.'))renderGallery();};
+  rm.onclick=async()=>{if(!confirm('Remove this photo from the '+pg[1]+' page?'))return;GP.splice(gi,1);gpMark();renderGallery();await gpSave('Photo removed.');};
   const acts=mk('div');acts.style.cssText='display:flex;gap:6px;align-items:center';acts.append(up,dn,rm);
   row.append(img,mid,acts);l.append(row);});
  if(gpDirty)$('gp-save').classList.remove('hide');}
@@ -255,37 +271,47 @@ async function gpUpload(files){if(!files.length){say('Choose at least one photo.
 $('gp-go').onclick=()=>gpUpload([...$('gp-files').files]);
 $('gp-drive').onclick=async()=>{try{say('Opening Google Drive...','info');const f=await BDDrive.pick({root:'../'});say('');if(f.length)await gpUpload(f);}catch(x){say(E(x),'err');}};
 function renderSite(){const s=CONTENT.site||{};$('si-ph').value=s.phone_display||'';$('si-em').value=s.email||'';$('si-a1').value=s.address_line1||'';$('si-a2').value=s.address_line2||'';$('si-hr').value=s.hours||'';$('si-pe').checked=!!s.promo_enabled;$('si-pt').value=s.promo_text||'';$('si-pl').value=s.promo_link||'';}
-$('si-form').onsubmit=async e=>{e.preventDefault();const ph=$('si-ph').value.trim();const dig=ph.replace(/\D/g,'');
- await saveSite(({phone_display:ph,phone_digits:dig.length===10?'1'+dig:dig,email:$('si-em').value.trim(),address_line1:$('si-a1').value.trim(),address_line2:$('si-a2').value.trim(),hours:$('si-hr').value.trim(),promo_enabled:$('si-pe').checked,promo_text:$('si-pt').value.trim(),promo_link:$('si-pl').value.trim()}));};
+$('si-form').onsubmit=async e=>{e.preventDefault();const ph=$('si-ph').value.trim();const dig=ph.replace(/\D/g,'');const snapshot=BDAdmin.formSnapshot('si-form');
+ if(await saveSite(({phone_display:ph,phone_digits:dig.length===10?'1'+dig:dig,email:$('si-em').value.trim(),address_line1:$('si-a1').value.trim(),address_line2:$('si-a2').value.trim(),hours:$('si-hr').value.trim(),promo_enabled:$('si-pe').checked,promo_text:$('si-pt').value.trim(),promo_link:$('si-pl').value.trim()})))BDAdmin.formSaved('si-form',snapshot);};
 function renderPackages(){const l=$('pk-list');l.innerHTML='';((CONTENT.packages&&CONTENT.packages.items)||[]).forEach(it=>{
- const i=mk('input',{value:it.price||'',maxlength:40});i.dataset.name=it.name;l.append(mk('label',{textContent:it.name}),i);});}
-$('pk-form').onsubmit=async e=>{e.preventDefault();const items=[...$('pk-list').querySelectorAll('input')].map(i=>({name:i.dataset.name,price:i.value.trim()}));await saveContent('packages',{items});};
+ const i=mk('input',{value:it.price||'',maxlength:40});i.dataset.name=it.name;i.setAttribute('aria-label',it.name+' starting price');l.append(mk('label',{textContent:it.name}),i);});}
+$('pk-form').onsubmit=async e=>{e.preventDefault();const items=[...$('pk-list').querySelectorAll('input')].map(i=>({name:i.dataset.name,price:i.value.trim()}));const snapshot=BDAdmin.formSnapshot('pk-form');if(await saveContent('packages',{items}))BDAdmin.formSaved('pk-form',snapshot);};
 function fqRow(q,a){const d=mk('div',{className:'faqrow'});d.style.cssText='border-top:1px solid #2a2a2a;padding-top:8px;margin-top:8px';
  const qi=mk('input',{value:q||'',maxlength:200,placeholder:'Question'});const ai=mk('textarea',{value:a||'',maxlength:2000,placeholder:'Answer',rows:3});ai.style.cssText='width:100%;padding:12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#f2f2f2;font:inherit;margin-top:6px';
- const rm=mk('button',{type:'button',className:'alt',textContent:'Remove'});rm.onclick=()=>d.remove();d.append(qi,ai,rm);return d;}
+ qi.setAttribute('aria-label','Question');ai.setAttribute('aria-label','Answer');const rm=mk('button',{type:'button',className:'alt',textContent:'Remove'});rm.onclick=()=>d.remove();d.append(qi,ai,rm);return d;}
 function renderFaq(){const l=$('fq-list');l.innerHTML='';((CONTENT.faq&&CONTENT.faq.items)||[]).forEach(x=>l.append(fqRow(x.question,x.answer)));}
 $('fq-add').onclick=()=>$('fq-list').append(fqRow('',''));
-$('fq-form').onsubmit=async e=>{e.preventDefault();const items=[...$('fq-list').querySelectorAll('.faqrow')].map(d=>({question:d.querySelector('input').value.trim(),answer:d.querySelector('textarea').value.trim()})).filter(x=>x.question&&x.answer);await saveContent('faq',{items});};
-async function loadEdit(){await loadContent();gpLoad();LIB=((CONTENT.gallery&&CONTENT.gallery.library)||[]).map(x=>({...x}));if(!(CONTENT.gallery&&CONTENT.gallery.library)){try{const r=await fetch('../data/library.json',{cache:'no-cache'});if(r.ok)LIB=await r.json();}catch(e){}}renderLib();renderGallery();const mgr=role==='owner'||role==='manager';$('ed-mgr').classList.toggle('hide',!mgr);if(mgr){renderSite();renderPackages();renderFaq();loadHome();loadChrome();}}
+$('fq-form').onsubmit=async e=>{e.preventDefault();const items=[...$('fq-list').querySelectorAll('.faqrow')].map(d=>({question:d.querySelector('input').value.trim(),answer:d.querySelector('textarea').value.trim()})).filter(x=>x.question&&x.answer);const snapshot=BDAdmin.formSnapshot('fq-form');if(await saveContent('faq',{items}))BDAdmin.formSaved('fq-form',snapshot);};
+async function loadEdit(){BDAdmin.loading();try{await loadContent();gpLoad();LIB=((CONTENT.gallery&&CONTENT.gallery.library)||[]).map(x=>({...x}));if(!(CONTENT.gallery&&CONTENT.gallery.library)){const r=await fetch('../data/library.json',{cache:'no-cache'});if(r.ok)LIB=await r.json();}renderLib();renderGallery();const mgr=role==='owner'||role==='manager';$('ed-mgr').classList.toggle('hide',!mgr);if(mgr){renderSite();renderPackages();renderFaq();await Promise.all([loadHome(),loadChrome()]);}BDAdmin.loaded();}catch(error){BDAdmin.failed('Website content could not be loaded. Your saved content has not been changed.');say(E(error),'err');}}
 
 // ---- homepage layout editor (stored inside the "site" content as site.home)
-let HM=null,hmTab='services';
-const hmMark=()=>{$('hm-save').textContent='Save homepage (unsaved changes)';$('ch-save').textContent='Save colors, header and footer (unsaved changes)';};
+let HM=null,hmTab='compare',hmDirty=false,hmSaved='';
+const hmSnapshot=()=>{if(!HM)return '';const{_base,...home}=HM;return JSON.stringify(home);};
+const hmMark=()=>{hmDirty=hmSnapshot()!==hmSaved;$('hm-save').textContent=hmDirty?'Save homepage (unsaved changes)':'Save homepage';$('ch-save').textContent=CH&&JSON.stringify(CH)!==chSaved?'Save colors, header and footer (unsaved changes)':'Save colors, header and footer';BDAdmin.refresh();};
 const dispUrl=u=>/^https?:/.test(u||'')?u:'../'+String(u||'').replace(/^\//,'');
 async function uploadImg(file,folder){const blob=await shrink(file);const path=folder+'/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.jpg';
  const{error}=await sb.storage.from('site-media').upload(path,blob,{contentType:'image/jpeg',upsert:false});if(error)throw error;return sb.storage.from('site-media').getPublicUrl(path).data.publicUrl;}
 function imgField(obj,key,label){const w=mk('div');w.style.cssText='display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin:8px 0';
- const im=mk('img',{src:dispUrl(obj[key]),alt:''});im.style.cssText='width:120px;height:86px;object-fit:cover;border-radius:8px;background:#222';
+ const frame=mk('span',{className:'bd-photo-thumb'}),im=mk('img',{alt:label});if(obj[key])im.src=dispUrl(obj[key]);
+ const transformKey=key==='a'?'aTransform':key==='b'?'bTransform':'transform';im.style.cssText=BDPhoto.style(obj[transformKey]);frame.append(im);
+ const setPhoto=url=>{obj[key]=url;delete obj[transformKey];im.src=dispUrl(url);im.style.cssText=BDPhoto.style();hmMark();};
  const side=mk('div');side.style.cssText='flex:1;min-width:200px';side.append(mk('div',{className:'small',textContent:label}));
- const f=mk('input',{type:'file',accept:'image/jpeg,image/png,image/webp'});
- f.onchange=async()=>{if(!f.files[0])return;say('Uploading photo...','info');try{obj[key]=await uploadImg(f.files[0],'homepage');im.src=obj[key];say('Photo ready. Click Save homepage to publish it.','ok');hmMark();}catch(x){say(E(x),'err');}};
+ const f=mk('input',{type:'file',accept:'image/jpeg,image/png,image/webp',hidden:true});
+ const computer=mk('button',{type:'button',textContent:'Upload from computer'});computer.onclick=()=>f.click();
+ const uploadStatus=mk('p',{className:'small',textContent:'JPEG, PNG or WebP. Large photos are optimized automatically.'});uploadStatus.setAttribute('role','status');
+ f.setAttribute('aria-label','Upload '+label.toLowerCase());
+ f.onchange=async()=>{const file=f.files[0];if(!file)return;computer.disabled=dv.disabled=sel.disabled=true;uploadStatus.textContent='Optimizing and uploading '+file.name+'...';say('Uploading photo...','info');try{setPhoto(await uploadImg(file,'homepage'));uploadStatus.textContent=file.name+' is ready. Adjust the framing, then save the homepage.';say('Photo ready. Click Save homepage to publish it.','ok');}catch(x){uploadStatus.textContent=E(x);say(E(x),'err');}finally{f.value='';computer.disabled=dv.disabled=sel.disabled=false;}};
  const sel=mk('select');sel.append(mk('option',{value:'',textContent:'Or choose a photo already uploaded'}));
  GP.forEach(g=>sel.append(mk('option',{value:g.image,textContent:(g.caption||'Photo')+' ('+((PAGES.find(q=>q[0]===g.page)||[0,g.page])[1])+')'})));
  LIB.forEach(g=>sel.append(mk('option',{value:g.url,textContent:'Library: '+(g.folder?g.folder+' / ':'')+(g.name||'Photo')})));
- sel.onchange=()=>{if(sel.value){obj[key]=sel.value;im.src=sel.value;hmMark();}};
+ sel.setAttribute('aria-label','Choose '+label.toLowerCase()+' from library');
+ sel.onchange=()=>{if(sel.value)setPhoto(sel.value);};
  const dv=mk('button',{type:'button',className:'alt',textContent:'Choose from Google Drive'});dv.style.margin='8px 0 0';
- dv.onclick=async()=>{try{say('Opening Google Drive...','info');const r=await BDDrive.pick({root:'../',single:true});say('');if(r[0]){say('Uploading photo...','info');obj[key]=await uploadImg(r[0],'homepage');im.src=obj[key];say('Photo ready. Click Save homepage to publish it.','ok');hmMark();}}catch(x){say(E(x),'err');}};
- side.append(f,dv,sel);w.append(im,side);return w;}
+ dv.onclick=async()=>{try{say('Opening Google Drive...','info');const r=await BDDrive.pick({root:'../',single:true});say('');if(r[0]){say('Uploading photo...','info');setPhoto(await uploadImg(r[0],'homepage'));say('Photo ready. Click Save homepage to publish it.','ok');}}catch(x){say(E(x),'err');}};
+ side.append(computer,f,dv,uploadStatus,sel);w.append(frame,side);return w;}
+function alignButton(item,paired){const b=mk('button',{type:'button',className:'alt',textContent:paired?'Align before / after photos':'Crop, zoom & position'});
+ b.onclick=()=>{if(paired?(!item.a||!item.b):!item.image){say('Choose the photo'+(paired?'s':'')+' first, then adjust the framing.','err');return;}
+  BDPhotoEditor.open({paired,photos:paired?[{src:dispUrl(item.a),label:item.la||'Before',transform:item.aTransform},{src:dispUrl(item.b),label:item.lb||'After',transform:item.bTransform}]:[{src:dispUrl(item.image),label:'Slide photo',transform:item.transform}],onApply:transforms=>{if(paired){item.aTransform=transforms[0];item.bTransform=transforms[1];}else item.transform=transforms[0];hmMark();renderHome();say('Framing applied to your draft. Click Save homepage to publish it.','info');}});};return b;}
 function txt(obj,key,label,max){const w=mk('div');w.append(mk('label',{textContent:label}));const i=mk('input',{value:obj[key]||'',maxlength:max||120});i.oninput=()=>{obj[key]=i.value;hmMark();};w.append(i);return w;}
 function listBox(arr,rowFn,blank,addLabel){const box=mk('div');const draw=()=>{box.innerHTML='';
  arr.forEach((it,i)=>{const row=mk('div');row.style.cssText='border-top:1px solid #2a2a2a;padding:10px 0';row.append(...rowFn(it,i));
@@ -294,53 +320,55 @@ function listBox(arr,rowFn,blank,addLabel){const box=mk('div');const draw=()=>{b
    bar.append(B('↑ Up',()=>{[arr[i-1],arr[i]]=[arr[i],arr[i-1]];hmMark();draw();},'alt',i===0),B('↓ Down',()=>{[arr[i+1],arr[i]]=[arr[i],arr[i+1]];hmMark();draw();},'alt',i===arr.length-1),B('Remove',()=>{if(!confirm('Remove this item?'))return;arr.splice(i,1);hmMark();draw();},'danger'));row.append(bar);}
   box.append(row);});
  if(blank){const a=mk('button',{type:'button',className:'alt',textContent:addLabel});a.onclick=()=>{arr.push(blank());hmMark();draw();};box.append(a);}};draw();return box;}
-async function hmDefaults(){const r=await fetch('../index.html',{cache:'no-cache'});const d=new DOMParser().parseFromString(await r.text(),'text/html');
+async function hmDefaults(){const r=await fetch('../index.html',{cache:'no-cache'});if(!r.ok)throw new Error('Could not load the homepage.');const d=new DOMParser().parseFromString(await r.text(),'text/html');
  const hb=d.querySelector('.hero-bg');
  return{hero:hb?hb.getAttribute('src'):'',
   services:[...d.querySelectorAll('#services .service-card')].map(a=>({image:a.querySelector('img').getAttribute('src'),title:a.querySelector('h3').childNodes[0].textContent.trim(),text:a.querySelector('p').textContent.trim(),link:a.getAttribute('href')})),
   compare:[...d.querySelectorAll('.comparison-card')].map(c=>{const im=c.querySelectorAll('.compare img');return{title:c.querySelector('h3').textContent,sub:c.querySelector('p').textContent,a:im[1].getAttribute('src'),la:c.querySelector('.view-label.left').textContent,b:im[0].getAttribute('src'),lb:c.querySelector('.view-label.right').textContent};}),
   slides:[...d.querySelectorAll('.carousel-slide')].map(x=>({image:x.querySelector('img').getAttribute('src'),title:'',link:x.querySelector('a')?x.querySelector('a').getAttribute('href'):'gallery.html'}))};}
 function renderHome(){
- const tabs=$('hm-tabs');tabs.innerHTML='';[['hero','Top of page'],['services','Service cards'],['compare','Before / after sliders'],['slides','Photo slider']].forEach(([k,l])=>{const b=mk('button',{type:'button',textContent:l});if(k===hmTab)b.className='on';b.onclick=()=>{hmTab=k;renderHome();};tabs.append(b);});
+ const tabs=$('hm-tabs');tabs.innerHTML='';[['hero','Top of page'],['services','Service cards'],['compare','Before / after sliders'],['slides','Photo slider']].forEach(([k,l])=>{const b=mk('button',{type:'button',textContent:l});if(k===hmTab)b.className='on';b.onclick=()=>BDAdmin.open(k==='hero'?'home':k);tabs.append(b);});
  const body=$('hm-body');body.innerHTML='';
  if(hmTab==='hero'){body.append(mk('p',{className:'small',textContent:'The big photo behind the headline at the top of the home page.'}),imgField(HM,'hero','Top-of-page background photo'));}
  if(hmTab==='services'){body.append(mk('p',{className:'small',textContent:'The six cards under "Our Services". Change each photo, title and one-line description.'}),
   listBox(HM.services,(it,i)=>[mk('strong',{textContent:'Card '+(i+1)}),imgField(it,'image','Card photo'),txt(it,'title','Title',60),txt(it,'text','Short description',120),txt(it,'link','Opens this page when tapped (for example customs.html)',200)],null));}
  if(hmTab==='compare'){body.append(mk('p',{className:'small',textContent:'The "Our Work" sliders where visitors drag to switch between two photos of the same vehicle. Add as many as you like.'}),
-  listBox(HM.compare,(it,i)=>[mk('strong',{textContent:'Slider '+(i+1)}),txt(it,'title','Vehicle name',60),txt(it,'sub','Small heading under it (for example PPF INSTALL)',60),imgField(it,'a','Left photo'),txt(it,'la','Left photo label (for example Before)',30),imgField(it,'b','Right photo'),txt(it,'lb','Right photo label (for example After)',30)],()=>({title:'New vehicle',sub:'',a:'',la:'Before',b:'',lb:'After'}),'Add a slider'));}
+  listBox(HM.compare,(it,i)=>[mk('strong',{textContent:'Slider '+(i+1)}),txt(it,'title','Vehicle name',60),txt(it,'sub','Small heading under it (for example PPF INSTALL)',60),imgField(it,'a','Left photo'),txt(it,'la','Left photo label (for example Before)',30),imgField(it,'b','Right photo'),txt(it,'lb','Right photo label (for example After)',30),alignButton(it,true)],()=>({title:'New vehicle',sub:'',a:'',la:'Before',b:'',lb:'After'}),'Add a slider'));}
  if(hmTab==='slides'){body.append(mk('p',{className:'small',textContent:'The swipe-through photo slider under "More From the Shop". Add, reorder and remove photos freely.'}),
-  listBox(HM.slides,(it,i)=>[mk('strong',{textContent:'Photo '+(i+1)}),imgField(it,'image','Slide photo'),txt(it,'title','Label shown on the photo (optional)',60),txt(it,'link','Opens this page when tapped (optional, for example gallery.html)',200)],()=>({image:'',title:'',link:'gallery.html'}),'Add a photo'));}
+  listBox(HM.slides,(it,i)=>[mk('strong',{textContent:'Photo '+(i+1)}),imgField(it,'image','Slide photo'),alignButton(it,false),txt(it,'title','Label shown on the photo (optional)',60),txt(it,'link','Opens this page when tapped (optional, for example gallery.html)',200)],()=>({image:'',title:'',link:'gallery.html'}),'Add a photo'));}
 }
-async function loadHome(){const base=await hmDefaults().catch(()=>({hero:'',services:[],compare:[],slides:[]}));const saved=(CONTENT.site&&CONTENT.site.home)||{};
- HM={hero:saved.hero||base.hero,services:(saved.services&&saved.services.length?saved.services:base.services).map(x=>({...x})),compare:(saved.compare&&saved.compare.length?saved.compare:base.compare).map(x=>({...x})),slides:(saved.slides&&saved.slides.length?saved.slides:base.slides).map(x=>({...x}))};
- HM._base=base;$('hm-save').textContent='Save homepage';renderHome();}
+async function loadHome(){const base=await hmDefaults();const saved=(CONTENT.site&&CONTENT.site.home)||{};
+ HM={...saved,hero:saved.hero||base.hero,services:(Array.isArray(saved.services)?saved.services:base.services).map(x=>({...x})),compare:(Array.isArray(saved.compare)?saved.compare:base.compare).map(x=>({...x})),slides:(Array.isArray(saved.slides)?saved.slides:base.slides).map(x=>({...x}))};
+ HM._base=base;hmSaved=hmSnapshot();hmDirty=false;$('hm-save').textContent='Save homepage';renderHome();}
 $('hm-save').onclick=async()=>{const bad=[...HM.compare.filter(c=>!c.a||!c.b),...HM.slides.filter(x=>!x.image)];if(bad.length){say('Every slider and slide needs its photo(s). Add the missing photo or remove the empty item.','err');return;}
- const{_base,...home}=HM;if(await saveSite({home},'Homepage saved. It is live now.'))$('hm-save').textContent='Save homepage';};
+ const{_base,...home}=HM;const snapshot=JSON.stringify(home);$('hm-save').disabled=true;
+ try{if(await saveSite({home:JSON.parse(snapshot)},'Homepage saved. It is live now.')){hmSaved=snapshot;hmDirty=hmSnapshot()!==snapshot;if(!hmDirty)$('hm-save').textContent='Save homepage';BDAdmin.refresh();}}finally{$('hm-save').disabled=false;}};
 $('hm-reset').onclick=async()=>{if(!confirm('Put the home page back to its original photos and layout? Your uploaded photos stay in your library.'))return;if(await saveSite({home:undefined},'Homepage reset to the original layout.'))loadHome();};
 
 // ---- site-wide look: colors, header, footer, plus links to the visual page editor
 const EPAGES=[['Home','index.html'],['Full Detailing','full-auto-detailing-services.html'],['Exterior Detailing','exterior-detailing-services.html'],['Ceramic Coating','ceramic-coating-service.html'],['Customs & Protection','customs.html'],['Gallery','gallery.html'],['Booking & Deposit Policy','policies.html'],['Privacy Policy','privacy-policy.html']];
 function renderPageLinks(){const l=$('pg-links');l.innerHTML='';EPAGES.forEach(([n,f])=>{const a=mk('a',{href:'../'+f+'?edit=1',target:'_blank',rel:'noopener',textContent:'Edit '+n});a.style.cssText='display:inline-block;margin:4px 8px 4px 0;padding:8px 14px;border-radius:99px;background:#222;color:#f2f2f2;text-decoration:none;font-weight:700';l.append(a);});}
-let CH=null;
+let CH=null,chSaved='';
 const COLORS=[['orange','Accent color (buttons, highlights)'],['bg','Page background'],['panel','Card and panel background'],['text','Main text'],['muted','Soft text'],['line','Lines and borders']];
-async function chDefaults(){const r=await fetch('../index.html',{cache:'no-cache'});const d=new DOMParser().parseFromString(await r.text(),'text/html');
+async function chDefaults(){const r=await fetch('../index.html',{cache:'no-cache'});if(!r.ok)throw new Error('Could not load the website appearance.');const d=new DOMParser().parseFromString(await r.text(),'text/html');
  const links=n=>[...n.querySelectorAll('a')].map(a=>({label:a.textContent.trim(),href:a.getAttribute('href')}));
  const fg=d.querySelector('footer .footer-grid'),cp=d.querySelector('footer .copyright'),bk=d.querySelector('header a.btn.small');
  return{theme:{orange:'#ff7900',bg:'#0b0b0b',panel:'#151515',text:'#f5f3ef',muted:'#a8a6a3',line:'#30302e'},nav:links(d.querySelector('header nav')),book:{label:bk?bk.textContent.trim():'Book Now',href:bk?bk.getAttribute('href'):''},
   footer:{tagline:fg.children[0].querySelector('p').innerHTML.replace(/<br\s*\/?>/gi,'\n'),social:links(fg.querySelector('.social')),exploreTitle:'EXPLORE',explore:links(fg.children[2]),copyright:cp.firstChild.nodeValue.trim(),copyrightNote:cp.querySelector('span')?cp.querySelector('span').textContent:''}};}
-function colorField(obj,key,label){const w=mk('div');w.style.cssText='display:flex;align-items:center;gap:10px;margin:8px 0';const i=mk('input',{type:'color',value:obj[key]});i.style.cssText='width:56px;height:40px;padding:2px';i.oninput=()=>{obj[key]=i.value;hmMark();};w.append(i,mk('span',{textContent:label}));return w;}
+function colorField(obj,key,label){const w=mk('div',{className:'dashboard-color-row'}),i=mk('input',{type:'color',value:obj[key]}),hex=mk('input',{type:'text',value:obj[key],maxLength:7,id:'color-'+key});hex.setAttribute('aria-label',label+' hex');i.setAttribute('aria-label',label+' picker');i.oninput=()=>{obj[key]=i.value;hex.value=i.value;hex.setCustomValidity('');hmMark();};hex.oninput=()=>{const valid=/^#[0-9a-f]{6}$/i.test(hex.value);hex.setCustomValidity(valid?'':'Use a six-digit hex color, such as #ff7900.');if(valid){obj[key]=hex.value;i.value=hex.value;hmMark();}};w.append(mk('label',{htmlFor:hex.id,textContent:label}),i,hex);return w;}
 function renderChrome(){const b=$('ch-body');b.innerHTML='';
  b.append(mk('h3',{textContent:'Colors'}));COLORS.forEach(([k,l])=>b.append(colorField(CH.theme,k,l)));
+ const sample=mk('div',{id:'dashboard-theme-preview',className:'dashboard-theme-preview'});sample.innerHTML='<h3>Beach Dawgs &amp; Co.</h3><p>A preview of your background, text, and accent colors.</p><article><strong>Care that shows.</strong><p>Automotive detailing, protection, and customization.</p><span>Book your detail</span></article>';b.append(sample);
  b.append(mk('h3',{textContent:'Header menu links'}),listBox(CH.nav,(it,i)=>[txt(it,'label','Link text',40),txt(it,'href','Goes to (for example customs.html or index.html#services)',250)],()=>({label:'New link',href:'index.html'}),'Add a menu link'));
  b.append(mk('h3',{textContent:'Book button (top right)'}),txt(CH.book,'label','Button text',30),txt(CH.book,'href','Button goes to',300));
  b.append(mk('h3',{textContent:'Footer'}),txt(CH.footer,'tagline','Tagline under the logo (use Enter for a new line)',200),txt(CH.footer,'copyright','Copyright line',80),txt(CH.footer,'copyrightNote','Note after the copyright',120),
   txt(CH.footer,'exploreTitle','Footer links heading',30),mk('strong',{textContent:'Footer links'}),listBox(CH.footer.explore,(it,i)=>[txt(it,'label','Link text',40),txt(it,'href','Goes to',250)],()=>({label:'New link',href:'index.html'}),'Add a footer link'),
   mk('strong',{textContent:'Social links'}),listBox(CH.footer.social,(it,i)=>[txt(it,'label','Name (for example Instagram)',40),txt(it,'href','Address (https://...)',300)],()=>({label:'New',href:'https://'}),'Add a social link'));}
-async function loadChrome(){const base=await chDefaults().catch(()=>null);const sv=CONTENT.site||{};if(!base){$('ch-body').textContent='Could not load the current header and footer.';return;}
+async function loadChrome(){const base=await chDefaults();const sv=CONTENT.site||{};
  CH={theme:Object.assign({},base.theme,sv.theme||{}),nav:(sv.nav&&sv.nav.length?sv.nav:base.nav).map(x=>({...x})),book:Object.assign({},base.book,sv.book||{}),
   footer:Object.assign({},base.footer,sv.footer||{})};CH.footer.explore=(CH.footer.explore||[]).map(x=>({...x}));CH.footer.social=(CH.footer.social||[]).map(x=>({...x}));
- $('ch-save').textContent='Save colors, header and footer';renderPageLinks();renderChrome();}
-$('ch-save').onclick=async()=>{if(await saveSite({theme:CH.theme,nav:CH.nav,book:CH.book,footer:CH.footer},'Saved. Colors, header and footer are live.'))$('ch-save').textContent='Save colors, header and footer';};
+ chSaved=JSON.stringify(CH);$('ch-save').textContent='Save colors, header and footer';renderPageLinks();renderChrome();BDAdmin.refresh();}
+$('ch-save').onclick=async()=>{const invalid=$('ch-body').querySelector('input:invalid');if(invalid){invalid.reportValidity();return;}const snapshot=JSON.stringify(CH);$('ch-save').disabled=true;try{if(await saveSite(JSON.parse(snapshot),'Saved. Colors, header and footer are live.')){chSaved=snapshot;hmMark();}}finally{$('ch-save').disabled=false;}};
 $('ch-reset').onclick=async()=>{if(!confirm('Put the colors, header and footer back to the original?'))return;if(await saveSite({theme:undefined,nav:undefined,book:undefined,footer:undefined},'Reset to the original look.'))loadChrome();};
 
 // ---- media library (cloud storage for photos; index kept in gallery content as "library")
@@ -380,6 +408,7 @@ async function libAdd(files){if(!files.length){say('Choose at least one photo.',
 $('lib-go').onclick=()=>libAdd([...$('lib-files').files]);
 $('lib-drive').onclick=async()=>{try{say('Opening Google Drive...','info');const f=await BDDrive.pick({root:'../'});say('');if(f.length)await libAdd(f);}catch(x){say(E(x),'err');}};
 $('lib-search').oninput=renderLib;
+BDAdmin.init();
 sb.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>boot(session),0);if(ev==='PASSWORD_RECOVERY')say('Enter a new password under Security.','info');});
 sb.auth.getSession().then(({data})=>boot(data.session));
 </script></body></html>
