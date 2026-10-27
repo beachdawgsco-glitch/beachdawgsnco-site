@@ -1,0 +1,7 @@
+/* Customs services use the shared detailing page cards and readable type. */
+.customs-detailing-page .section-head>h2{max-width:650px}
+.customs-service .package-description{margin-bottom:0}
+.customs-service .package-description a{color:var(--text);text-decoration:underline;text-decoration-color:var(--orange);text-underline-offset:5px}
+.customs-partner h2{font-size:clamp(30px,3vw,42px);line-height:1.15}
+.customs-partner>p{max-width:80ch}
+.customs-detailing-page .detail-package-head{flex-wrap:wrap}
