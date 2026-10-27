@@ -33,6 +33,7 @@
 .detail-process li{font-size:17px;color:var(--text);padding:12px 0 12px 8px;line-height:1.8}
 .detail-process li::marker{color:var(--orange);font-weight:700}
 .detailing-page .detailing-contact{padding-top:0}
+.detailing-page .page-hero+.detailing-contact{padding-top:64px;padding-bottom:0}
 .detail-contact-card{display:grid;grid-template-columns:1fr 1.5fr;overflow:hidden;border:1px solid var(--line);border-radius:20px;background:var(--panel)}
 .detail-contact-card>img{width:100%;height:360px;object-fit:cover}
 .detail-contact-card>div{padding:42px;align-self:center}
@@ -51,6 +52,7 @@
  .detail-contact-card>div{padding:28px}
 }
 @media(max-width:560px){
+ .detailing-page .page-hero+.detailing-contact{padding-top:44px}
  .detailing-page .detailing-packages,.detailing-page .detailing-care{padding-block:44px}
  .detail-package{padding:26px 20px;border-radius:16px;margin-bottom:28px}
  .detail-package-head{align-items:start;flex-direction:column;gap:18px}

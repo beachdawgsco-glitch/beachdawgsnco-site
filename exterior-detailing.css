@@ -1,0 +1,8 @@
+/* Exterior-only lists share the package page's typography and card styling. */
+.exterior-detailing-page .detailing-contact{padding-top:64px;padding-bottom:0}
+@media(max-width:560px){.exterior-detailing-page .detailing-contact{padding-top:44px}}
+.exterior-inclusions h3{font-size:21px;margin:0 0 16px;color:var(--text)}
+.exterior-inclusions .detail-checklist{columns:2;column-gap:56px}
+.exterior-inclusions .detail-checklist li{break-inside:avoid}
+@media(max-width:800px){.exterior-inclusions .detail-checklist{column-gap:28px}}
+@media(max-width:560px){.exterior-inclusions .detail-checklist{columns:1}}
