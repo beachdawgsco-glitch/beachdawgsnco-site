@@ -1,0 +1,65 @@
+/* Full detailing packages: use the site's shared colors, type, and buttons. */
+.detailing-page .page-hero{padding-bottom:72px}
+.detailing-page .detailing-packages{padding-top:64px;padding-bottom:64px}
+.detailing-page .section-head{display:flex;align-items:center;text-align:left}
+.detailing-page .section-head>p{max-width:440px;margin:0;font-size:17px;line-height:1.85}
+.package-jumps{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 34px}
+.package-jumps a{border:1px solid var(--line);border-radius:30px;padding:12px 20px;font-size:14px;font-weight:600;color:var(--text)}
+.package-jumps a:hover{border-color:var(--orange);color:var(--orange)}
+.detail-package{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:44px;margin-bottom:36px;scroll-margin-top:110px}
+.detail-package:last-child{margin-bottom:0}
+.detail-package-head{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.detail-package-head .eyebrow{color:var(--orange);font-size:12px;margin-bottom:14px}
+.detail-package-head h2{font-size:clamp(34px,3.2vw,48px);margin:0 0 12px;line-height:1.05}
+.detail-package-head .price{margin:0;font-size:24px!important;color:var(--orange)!important}
+.detail-package-head .btn{flex-shrink:0;font-size:15px;padding:16px 28px}
+.package-description{max-width:72ch;font-size:17px;line-height:1.85;margin:28px 0 36px}
+.detail-inclusions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px}
+.detail-inclusions h3{font-size:21px;margin:0 0 16px;color:var(--text)}
+.detail-checklist{list-style:none;margin:0;padding:0}
+.detail-checklist li{position:relative;padding:12px 0 12px 28px;font-size:17px;line-height:1.8;color:var(--text)}
+.detail-checklist li:last-child{border-bottom:0}
+.detail-checklist li::before{content:'✓';position:absolute;left:0;top:12px;color:var(--orange);font-weight:700}
+.package-notice{margin:32px 0 0;padding:18px 22px;border-left:2px solid var(--orange);background:var(--bg);border-radius:0 10px 10px 0;font-size:15px;line-height:1.8;color:var(--text)}
+.detailing-page .detailing-care{border-top:1px solid var(--line);padding-top:64px;padding-bottom:64px}
+.care-intro{max-width:800px;margin-bottom:32px}
+.care-intro h2{margin-bottom:20px}
+.care-intro>p{font-size:17px;line-height:1.85}
+.care-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.care-panel{padding:34px;border:1px solid var(--line);border-radius:20px;background:var(--panel)}
+.care-panel h3{font-size:24px;margin-bottom:22px}
+.care-panel>p{font-size:17px;line-height:1.8}
+.detail-process{margin:0;padding-left:24px}
+.detail-process li{font-size:17px;color:var(--text);padding:12px 0 12px 8px;line-height:1.8}
+.detail-process li::marker{color:var(--orange);font-weight:700}
+.detailing-page .detailing-contact{padding-top:0}
+.detail-contact-card{display:grid;grid-template-columns:1fr 1.5fr;overflow:hidden;border:1px solid var(--line);border-radius:20px;background:var(--panel)}
+.detail-contact-card>img{width:100%;height:360px;object-fit:cover}
+.detail-contact-card>div{padding:42px;align-self:center}
+.detail-contact-card h2{font-size:clamp(36px,4vw,52px);margin-bottom:20px}
+.detail-contact-card p{font-size:17px;line-height:1.85}
+.detail-contact-actions{display:flex;flex-wrap:wrap;align-items:center;gap:20px;margin-top:24px}
+.detail-contact-actions>a{font-size:15px;font-weight:600}
+@media(max-width:800px){
+ .detailing-page .section-head{display:block}
+ .detailing-page .section-head>p{margin-top:20px;max-width:600px}
+ .detail-package{padding:30px}
+ .detail-inclusions{gap:28px}
+ .care-columns{grid-template-columns:1fr}
+ .detail-contact-card{grid-template-columns:1fr}
+ .detail-contact-card>img{height:240px;min-height:0}
+ .detail-contact-card>div{padding:28px}
+}
+@media(max-width:560px){
+ .detailing-page .detailing-packages,.detailing-page .detailing-care{padding-block:44px}
+ .detail-package{padding:26px 20px;border-radius:16px;margin-bottom:28px}
+ .detail-package-head{align-items:start;flex-direction:column;gap:18px}
+ .detail-package-head .btn{width:100%}
+ .detail-inclusions{grid-template-columns:1fr;gap:24px}
+ .package-description{margin-block:22px}
+ .package-jumps{gap:8px}
+ .package-jumps a{font-size:14px;padding:10px 16px}
+ .detail-checklist li,.detail-process li{font-size:16px}
+ .care-panel{padding:24px 20px}
+ .detail-contact-card>div{padding:26px 20px}
+}
