@@ -1,0 +1,18 @@
+/* Coating-specific layout; shared cards and type come from detailing-packages.css. */
+.ceramic-detailing-page .section-head>h2{max-width:620px}
+.ceramic-detailing-page .detail-contact-actions+p{margin-top:24px;margin-bottom:0}
+.ceramic-detailing-page .detail-contact-card>img{height:440px}
+.ceramic-options-heading,.ceramic-prep>h2{font-size:clamp(30px,3vw,42px);line-height:1.15}
+.ceramic-detailing-page .detail-package-head{flex-wrap:wrap}
+.ceramic-detailing-page .detail-package-head>div{flex:1 1 440px}
+.ceramic-inclusions h3{font-size:21px;margin:0 0 16px;color:var(--text)}
+.ceramic-inclusions .detail-checklist,.ceramic-prep .detail-checklist{columns:2;column-gap:56px}
+.ceramic-inclusions li,.ceramic-prep li{break-inside:avoid}
+@media(max-width:800px){
+ .ceramic-detailing-page .detail-contact-card>img{height:240px}
+ .ceramic-inclusions .detail-checklist,.ceramic-prep .detail-checklist{column-gap:28px}
+}
+@media(max-width:560px){
+ .ceramic-detailing-page .detail-package-head>div{flex:auto}
+ .ceramic-inclusions .detail-checklist,.ceramic-prep .detail-checklist{columns:1}
+}
