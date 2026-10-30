@@ -8,7 +8,8 @@ async function pick(opts){const root=(opts&&opts.root)||'',multi=!(opts&&opts.si
  await Promise.all([load('https://accounts.google.com/gsi/client'),load('https://apis.google.com/js/api.js')]);
  await new Promise(ok=>gapi.load('picker',ok));
  const token=await new Promise((ok,no)=>{const t=google.accounts.oauth2.initTokenClient({client_id:c.clientId,scope:'https://www.googleapis.com/auth/drive.file',callback:r=>r.access_token?ok(r.access_token):no(new Error(r.error_description||r.error||'Google sign-in was cancelled.')),error_callback:e=>no(new Error(e&&e.message||'Google sign-in was cancelled.'))});t.requestAccessToken({prompt:''});});
- const docs=await new Promise(ok=>{const v=new google.picker.DocsView(google.picker.ViewId.DOCS_IMAGES).setIncludeFolders(true).setMimeTypes('image/jpeg,image/png,image/webp');
+ // drive.file does not grant thumbnail access before selection. Google recommends LIST for this scope.
+ const docs=await new Promise(ok=>{const v=new google.picker.DocsView(google.picker.ViewId.DOCS_IMAGES).setMode(google.picker.DocsViewMode.LIST).setIncludeFolders(true).setMimeTypes('image/jpeg,image/png,image/webp');
   const b=new google.picker.PickerBuilder().addView(v).setOAuthToken(token).setDeveloperKey(c.apiKey).setAppId(String(c.clientId).split('-')[0]).setTitle('Choose photos from Google Drive').setCallback(d=>{if(d.action==='picked')ok(d.docs);else if(d.action==='cancel')ok([]);});
   if(multi)b.enableFeature(google.picker.Feature.MULTISELECT_ENABLED);b.build().setVisible(true);});
  const out=[];for(const d of docs){const r=await fetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(d.id)+'?alt=media',{headers:{Authorization:'Bearer '+token}});
