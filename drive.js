@@ -39,6 +39,7 @@ async function uploadVideos(opts){
    .addView(new google.picker.DocsUploadView().setIncludeFolders(true))
    .setOAuthToken(token).setDeveloperKey(c.apiKey).setAppId(String(c.clientId).split('-')[0])
    .setOrigin(window.location.origin).setTitle('Upload videos to Google Drive')
+   .setSize(Math.min(window.innerWidth-24,1050),Math.min(window.innerHeight-24,650))
    .setCallback(d=>{
     if(d.action==='cancel'){picker.dispose();ok([]);}
     else if(d.action==='picked'){
