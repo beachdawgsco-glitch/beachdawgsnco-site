@@ -1,4 +1,4 @@
-/* Google Drive photo picker (Google Picker API). Needs data/google.json with {"clientId","apiKey"}. Only files the user picks are shared with this page. */
+/* Google Drive photo picker (Google Picker API). Needs data/google.json with {"clientId","apiKey"}. Read-only Drive permission enables thumbnails; this page imports only selected photos. */
 window.BDDrive=(function(){
 const load=src=>new Promise((ok,no)=>{if(document.querySelector('script[src="'+src+'"]'))return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>no(new Error('Could not load Google. Check your connection or ad blocker.'));document.head.append(s);});
 let cfgP=null;
@@ -7,9 +7,14 @@ async function pick(opts){const root=(opts&&opts.root)||'',multi=!(opts&&opts.si
  if(!c.clientId||!c.apiKey)throw new Error('Google Drive is not set up yet. Ask Claude to finish the Google Drive connection.');
  await Promise.all([load('https://accounts.google.com/gsi/client'),load('https://apis.google.com/js/api.js')]);
  await new Promise(ok=>gapi.load('picker',ok));
- const token=await new Promise((ok,no)=>{const t=google.accounts.oauth2.initTokenClient({client_id:c.clientId,scope:'https://www.googleapis.com/auth/drive.file',callback:r=>r.access_token?ok(r.access_token):no(new Error(r.error_description||r.error||'Google sign-in was cancelled.')),error_callback:e=>no(new Error(e&&e.message||'Google sign-in was cancelled.'))});t.requestAccessToken({prompt:''});});
- // drive.file does not grant thumbnail access before selection. Google recommends LIST for this scope.
- const docs=await new Promise(ok=>{const v=new google.picker.DocsView(google.picker.ViewId.DOCS_IMAGES).setMode(google.picker.DocsViewMode.LIST).setIncludeFolders(true).setMimeTypes('image/jpeg,image/png,image/webp');
+ const scope='https://www.googleapis.com/auth/drive.readonly';
+ const token=await new Promise((ok,no)=>{const t=google.accounts.oauth2.initTokenClient({client_id:c.clientId,scope,include_granted_scopes:false,callback:r=>{
+  if(!r.access_token)return no(new Error(r.error_description||r.error||'Google sign-in was cancelled.'));
+  if(!google.accounts.oauth2.hasGrantedAllScopes(r,scope))return no(new Error('Photo previews need Google Drive read access. Choose Google Drive again and allow viewing and downloading your files, or upload from your computer.'));
+  ok(r.access_token);
+ },error_callback:e=>no(new Error(e&&e.message||'Google sign-in was cancelled.'))});t.requestAccessToken({prompt:''});});
+ // Google requires drive.readonly (or full Drive access) for thumbnails before selection.
+ const docs=await new Promise(ok=>{const v=new google.picker.DocsView(google.picker.ViewId.DOCS_IMAGES).setMode(google.picker.DocsViewMode.GRID).setIncludeFolders(true).setMimeTypes('image/jpeg,image/png,image/webp');
   const b=new google.picker.PickerBuilder().addView(v).setOAuthToken(token).setDeveloperKey(c.apiKey).setAppId(String(c.clientId).split('-')[0]).setTitle('Choose photos from Google Drive').setCallback(d=>{if(d.action==='picked')ok(d.docs);else if(d.action==='cancel')ok([]);});
   if(multi)b.enableFeature(google.picker.Feature.MULTISELECT_ENABLED);b.build().setVisible(true);});
  const out=[];for(const d of docs){const r=await fetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(d.id)+'?alt=media',{headers:{Authorization:'Bearer '+token}});
