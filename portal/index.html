@@ -61,6 +61,11 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
   <label for="lib-folder-up">Upload into folder (optional)</label><input id="lib-folder-up" list="lib-folders" maxlength="60" placeholder="For example Ceramic Coatings"><datalist id="lib-folders"></datalist>
   <label for="lib-files">Choose photos (JPEG, PNG or WebP)</label><input id="lib-files" type="file" accept="image/jpeg,image/png,image/webp" multiple>
   <button id="lib-go" type="button">Upload photos</button><button id="lib-drive" type="button" class="alt">Import from Google Drive</button>
+  <h3>Videos in Google Drive</h3>
+  <p class="small">Upload videos from your phone or computer directly to your Google Drive. Choose your business Google account and a destination folder in the upload window. Files follow that folder's sharing settings and are not automatically published on your website. Keep this tab open until the upload finishes.</p>
+  <button id="lib-video-drive" type="button" class="alt">Upload videos to Google Drive</button>
+  <div id="lib-video-status" class="small" role="status" aria-live="polite"></div>
+  <ul id="lib-video-results" aria-label="Uploaded Drive files"></ul>
   <hr style="border-color:#2a2a2a;margin:18px 0">
   <div class="tabs" id="lib-tabs"></div>
   <label for="lib-search">Search by name</label><input id="lib-search" maxlength="60">
@@ -123,12 +128,12 @@ a{color:var(--o)}img.qr{background:#fff;padding:8px;border-radius:10px;width:200
   <h3>Encrypted backup</h3><p class="small">Downloads customer profiles, vehicles, privacy requests and site content as a file locked with a passphrase you choose. The passphrase is never sent anywhere. If you lose it, the backup cannot be opened.</p>
   <label for="bp">Backup passphrase (at least 14 characters)</label><input id="bp" type="password" minlength="14" autocomplete="new-password">
   <button id="bk-go">Download encrypted backup</button>
-  <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Restore from backup</h3><p class="small">Restore updates matching records from the file. It never deletes anything. You see what is in the file before anything changes.</p>
+  <hr style="border-color:#2a2a2a;margin:22px 0"><h3>Restore from backup</h3><p class="small">Restore updates customer profiles and vehicles only. Website content and privacy requests remain in the backup for manual recovery. Existing accounts are required. The portal accepts backup files up to 8 MB, with at most 5 MB of records and 10,000 profiles or vehicles; larger backups need manual recovery. Preview the file before restoring.</p>
   <label for="rf">Backup file</label><input id="rf" type="file" accept=".json,.bdbak"><label for="rp">Backup passphrase</label><input id="rp" type="password" autocomplete="off">
   <button id="rs-prev" class="alt">Preview backup</button><div id="rs-out"></div><button id="rs-go" class="danger hide">Restore these records</button></div>
 </div></section>
 </main>
-<script src="../photo-frame.js"></script><script src="photo-editor.js"></script><script src="dashboard.js"></script><script src="../drive.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../photo-frame.js"></script><script src="photo-editor.js"></script><script src="dashboard.js"></script><script src="../drive.js?v=20261031"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 const SB_URL='https://gxjgqxqcvkfanvydbztv.supabase.co',SB_KEY='sb_publishable_pI_tA_OhNtH4sGaZ8yor-g_b7kKJ2F3';
 const sb=supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
@@ -188,7 +193,8 @@ $('mfa-form').onsubmit=async e=>{e.preventDefault();const{error}=await sb.auth.m
  if(error){say(E(error),'err');return;}$('mfa-code').value='';$('mfa-enroll').classList.add('hide');say('Two-step login verified.','ok');await sb.auth.refreshSession();boot((await sb.auth.getSession()).data.session);};
 // ---- encrypted backup (AES-256-GCM, key from passphrase via PBKDF2-SHA256, all in this browser)
 const enc=new TextEncoder(),dec=new TextDecoder(),ITER=600000;
-const b64=u=>btoa(String.fromCharCode(...new Uint8Array(u))),unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+function b64(u){const bytes=new Uint8Array(u);let s='';for(let i=0;i<bytes.length;i+=32768)s+=String.fromCharCode(...bytes.subarray(i,i+32768));return btoa(s);}
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 async function key(pass,salt,iter){const base=await crypto.subtle.importKey('raw',enc.encode(pass),'PBKDF2',false,['deriveKey']);
  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:iter,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);}
 $('bk-go').onclick=async()=>{const pass=$('bp').value;if(pass.length<14){say('Use a passphrase of at least 14 characters.','err');return;}
@@ -407,8 +413,24 @@ async function libAdd(files){if(!files.length){say('Choose at least one photo.',
  renderLib();$('lib-go').disabled=false;$('lib-drive').disabled=false;}
 $('lib-go').onclick=()=>libAdd([...$('lib-files').files]);
 $('lib-drive').onclick=async()=>{try{say('Opening Google Drive...','info');const f=await BDDrive.pick({root:'../'});say('');if(f.length)await libAdd(f);}catch(x){say(E(x),'err');}};
+$('lib-video-drive').onclick=async()=>{
+ const button=$('lib-video-drive'),status=$('lib-video-status');
+ button.disabled=true;status.textContent='Opening Google Drive...';
+ try{
+  const {data,error}=await sb.rpc('beach_my_access');
+  if(error||!['owner','manager','staff'].includes(data&&data.role))throw new Error('Sign in with a staff account and complete two-step login to upload.');
+  const files=await BDDrive.uploadVideos({root:'../'});
+  status.textContent=files.length?files.length+' file'+(files.length===1?'':'s')+' uploaded to Google Drive.':'Upload window closed. Check Drive for any files already uploaded.';
+  for(const file of files){
+   if(!/^[\w-]+$/.test(file.id||''))continue;
+   const li=document.createElement('li'),a=document.createElement('a');
+   a.textContent=file.name||'Open uploaded file';a.href='https://drive.google.com/file/d/'+file.id+'/view';a.target='_blank';a.rel='noopener noreferrer';li.appendChild(a);$('lib-video-results').appendChild(li);
+  }
+ }catch(x){status.textContent=E(x);}finally{button.disabled=false;}
+};
 $('lib-search').oninput=renderLib;
 BDAdmin.init();
 sb.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>boot(session),0);if(ev==='PASSWORD_RECOVERY')say('Enter a new password under Security.','info');});
 sb.auth.getSession().then(({data})=>boot(data.session));
 </script></body></html>
+

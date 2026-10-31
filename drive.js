@@ -20,4 +20,39 @@ async function pick(opts){const root=(opts&&opts.root)||'',multi=!(opts&&opts.si
  const out=[];for(const d of docs){const r=await fetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(d.id)+'?alt=media',{headers:{Authorization:'Bearer '+token}});
   if(!r.ok)throw new Error('Could not read "'+d.name+'" from Drive.');const blob=await r.blob();blob.name=d.name;out.push(blob);}
  return out;}
-return{pick};})();
+// Google's upload view handles large videos, progress and folder selection.
+// Uploads use per-file access; no token or video is stored by this website.
+async function uploadVideos(opts){
+ const c=await config((opts&&opts.root)||'');
+ if(!c.clientId||!c.apiKey)throw new Error('Google Drive is not configured.');
+ await Promise.all([load('https://accounts.google.com/gsi/client'),load('https://apis.google.com/js/api.js')]);
+ await new Promise(ok=>gapi.load('picker',ok));
+ const scope='https://www.googleapis.com/auth/drive.file';
+ const token=await new Promise((ok,no)=>{
+  const client=google.accounts.oauth2.initTokenClient({client_id:c.clientId,scope,include_granted_scopes:false,
+   callback:r=>{if(!r.access_token||!google.accounts.oauth2.hasGrantedAllScopes(r,scope))return no(new Error('Allow access to the files you upload to continue.'));ok(r.access_token);},
+   error_callback:()=>no(new Error('Google sign-in was closed or blocked. Allow the Google popup and try again.'))});
+  client.requestAccessToken({prompt:''});
+ });
+ return new Promise((ok,no)=>{
+  const picker=new google.picker.PickerBuilder()
+   .addView(new google.picker.DocsUploadView().setIncludeFolders(true))
+   .setOAuthToken(token).setDeveloperKey(c.apiKey).setAppId(String(c.clientId).split('-')[0])
+   .setOrigin(window.location.origin).setTitle('Upload videos to Google Drive')
+   .setCallback(d=>{
+    if(d.action==='cancel'){picker.dispose();ok([]);}
+    else if(d.action==='picked'){
+     picker.dispose();
+     // Read back completed files before reporting success. Do not change sharing.
+     Promise.all((d.docs||[]).map(async doc=>{
+      const r=await fetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(doc.id)+'?fields=id,name,mimeType,webViewLink&supportsAllDrives=true',{headers:{Authorization:'Bearer '+token}});
+      if(!r.ok)throw new Error('Google may have uploaded your file, but confirmation failed. Check Drive before trying again.');
+      return r.json();
+     })).then(ok,no);
+    }
+   }).build();
+  picker.setVisible(true);
+ });
+}
+return{pick,uploadVideos};})();
+
